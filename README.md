@@ -1,6 +1,10 @@
 # Dynamic_Graphs_with_Pygame
 This is a python library created using pygame that manages the creation of graphs that update dynamically displaying the changes of x and y over time.
 
+# How to install
+This package will be added to pip so a simple "pip install dynamic_graphs_with_pygame" would suffice.
+Otherwise, clone this repository.
+
 # Possible uses
 Right now the supported graphs that can be made are: histograms and linegraphs. 
 You may use the library's logic to add your own type of graphs as well! 
@@ -9,10 +13,6 @@ Attention! Pygame has limitations with displaying very small objects, take note 
 
 Be sure to take advantage of the ability of this library to draw objects in pygame that have alpha (transparency).
 This way you can display different graphs on top of each other.
-
-# How to install
-This package will be added to pip so a simple "pip install dynamic_pygame_graphs" would suffice.
-Otherwise, clone this repository.
 
 # How to use
 Take a look at the example_usage.py too.
