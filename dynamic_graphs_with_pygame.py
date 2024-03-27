@@ -194,10 +194,10 @@ class dynamic_pygame_graphs_class:
         # This shows how many bins or how many bars are displayed between two indicator points.
         num_of_bins_between_two_x_indicator_points = int(graph_x / x_indicator_points / graph_bin_size)
 
-        # This shows how many actual values of x exist between two indicator_points
+        # This shows how many actual values of x exist between two indicator_points.
         distance_between_two_x_indicator_points = num_of_bins_between_two_x_indicator_points * bin_size
 
-        # This shows how many actual values of y exist between two indicator_points
+        # This shows how many actual values of y exist between two indicator_points.
         distance_between_two_y_indicator_points = graph_y / y_indicator_points / y_amplifier
 
 
