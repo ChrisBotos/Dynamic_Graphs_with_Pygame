@@ -1,6 +1,6 @@
 import pygame
 import numpy as np
-from libname.dynamic_graphs_with_pygame import dynamic_pygame_graphs
+from dynamic_graphs_with_pygame import dynamic_pygame_graphs_class
 
 
 # Initialize Pygame
@@ -16,7 +16,7 @@ pygame.display.set_caption("Randomized NumPy Array")
 # Make the instance
 x = 30
 y = 30
-pygame_graphs_instance = dynamic_pygame_graphs(x, y, screen)
+pygame_graphs_instance = dynamic_pygame_graphs_class(x, y, screen)
 
 
 # Main loop

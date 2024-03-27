@@ -17,11 +17,11 @@ This way you can display different graphs on top of each other.
 # How to use
 Take a look at the example_usage.py too.
 
-Take note that all the functions exist inside a class called dynamic_pygame_graphs.
+Take note that all the functions exist inside a class called dynamic_pygame_graphs_class.
 Essentially you need to first make an instance of this class with details like the positions of the axes and the pygame screen you want to display it in. (your x values are allowed to be larger than the size of of the graph_x axis)
 
 Example:
-pygame_graphs_instance = dynamic_pygame_graphs(x, y, screen)
+pygame_graphs_instance = dynamic_pygame_graphs_class(x, y, screen)
 
 Afterwards you can use this instance to draw a graph of your choosing on screen.
 
