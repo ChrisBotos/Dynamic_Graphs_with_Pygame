@@ -1,2 +1,2 @@
-from dynamic_graphs_with_pygame import dynamic_pygame_graphs_class
+from dynamic_graphs_with_pygame.graphs import dynamic_pygame_graphs_class
 
