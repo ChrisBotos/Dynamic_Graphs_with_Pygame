@@ -306,7 +306,7 @@ class dynamic_pygame_graphs_class:
 
 
         """Draw the indicator_points"""
-        # This shows how many actual values of x and y exist between two indicator_points
+        # This shows how many actual values of x and y exist between two indicator_points.
         distance_between_two_x_indicator_points = max_x // x_indicator_points
         distance_between_two_y_indicator_points = max_y // y_indicator_points / y_amplifier
 
