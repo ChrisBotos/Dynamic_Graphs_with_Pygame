@@ -1,6 +1,6 @@
 import pygame
 import numpy as np
-from libname/dynamic_graphs_with_pygame import dynamic_pygame_graphs
+from libname.dynamic_graphs_with_pygame import dynamic_pygame_graphs
 
 
 # Initialize Pygame

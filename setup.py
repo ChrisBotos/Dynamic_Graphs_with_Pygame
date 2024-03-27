@@ -1,4 +1,4 @@
-from setuptools import setup
+from setuptools import setup, find_packages
 
 with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
@@ -12,7 +12,7 @@ setup(
     author="Christos Botos",
     author_email="hcty02@gmail.com",
     url="https://github.com/ChrisBotos/Dynamic_Graphs_with_Pygame",
-    packages=["dynamic_graphs_with_pygame"],  # Replace "dynamic_pygame_graphs" with your actual package name
+    packages=find_packages(),  # Use find_packages to automatically discover packages
     install_requires=["pygame", "numpy"],  # Add any dependencies here
     classifiers=[
         "Programming Language :: Python :: 3",
