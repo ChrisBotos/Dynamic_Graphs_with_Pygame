@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: dynamic-graphs-with-pygame
-Version: 1.0.1
+Version: 1.0.2
 Summary: A class for drawing dynamic graphs using Pygame.
 Home-page: https://github.com/ChrisBotos/Dynamic_Graphs_with_Pygame
 Author: Christos Botos
@@ -20,10 +20,10 @@ This is a python library created using pygame that manages the creation of graph
 
 # How to install
 This package will be added to pip so a simple "pip install dynamic_graphs_with_pygame" would suffice.
-Otherwise, clone this repository.
+Otherwise, clone the GitHub repository.
 
 # Possible uses
-Right now the supported graphs that can be made are: histograms and linegraphs. 
+Right now the supported graphs that can be made are: histograms and line_graphs. 
 You may use the library's logic to add your own type of graphs as well! 
 It is fairly easy just look at how the existing functions were made and do something similar.
 Attention! Pygame has limitations with displaying very small objects, take note of that and look at how the case of histogram bin width < 1 is handled.
@@ -62,12 +62,12 @@ pygame_graphs_instance.dynamic_histogram(x_values=np.array([1, 0, 2, 3, 0, 1]),
                                          bin_array_is_given_as_x_values=True,
                                          have_extra_bin=True)
 
-Of course you do not need to fill all those variables, they all have pregiven values.
+Of course, you do not need to fill all those variables, they all have pre-given values.
 As for what exactly all of them mean refer to the comments in the actual code.
 
-Scrolling is achived by the keyboard arrows by deafault. 
+Scrolling is achieved by the keyboard arrows by default. 
 You may change that, look at the scroll function.
 
-Attention: For the histogram, if you want some of your bins to be dispayed as negative along the x axis tkae advantage of move_zero_along_x_axis parameter to set which bin corresponds to the zero position.
+Attention: For the histogram, if you want some of your bins to be displayed as negative along the x_axis take advantage of move_zero_along_x_axis parameter to set which bin corresponds to the zero position.
 
 

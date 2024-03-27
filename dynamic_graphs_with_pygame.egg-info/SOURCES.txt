@@ -6,5 +6,3 @@ dynamic_graphs_with_pygame.egg-info/SOURCES.txt
 dynamic_graphs_with_pygame.egg-info/dependency_links.txt
 dynamic_graphs_with_pygame.egg-info/requires.txt
 dynamic_graphs_with_pygame.egg-info/top_level.txt
-libname/__init__.py
-libname/dynamic_graphs_with_pygame.py
