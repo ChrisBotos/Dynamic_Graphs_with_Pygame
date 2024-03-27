@@ -2,18 +2,22 @@ import pygame
 import numpy as np
 from dynamic_graphs_with_pygame import dynamic_pygame_graphs_class
 
+
 # Initialize Pygame
 pygame.init()
+
 
 # Set up the display
 WIDTH, HEIGHT = 1200, 700
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Randomized NumPy Array")
 
+
 # Make the instance
 x = 30
 y = 30
 pygame_graphs_instance = dynamic_pygame_graphs_class(x, y, screen)
+
 
 # Main loop
 running = True
