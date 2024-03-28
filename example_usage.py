@@ -153,8 +153,8 @@ while running:
         # Here I have a different instance ready.
 
         if not pause:
-            x_randomized_array1 = np.random.uniform(0, 600, 500)
-            y_randomized_array1 = np.random.uniform(0, 400, 500)
+            x_randomized_array1 = np.sort(np.random.uniform(0, 600, 500))
+            y_randomized_array1 = np.sort(np.random.uniform(0, 400, 500))  # Be sure to sort them if you want.
 
         pygame_graphs_instance2.dynamic_line_graph(x_values=x_randomized_array1,
                                                    y_values=y_randomized_array1,

@@ -2,7 +2,7 @@ LICENSE
 README.md
 setup.py
 dynamic_graphs_with_pygame/__init__.py
-dynamic_graphs_with_pygame/graphs.py
+dynamic_graphs_with_pygame/dyn_graphs.py
 dynamic_graphs_with_pygame.egg-info/PKG-INFO
 dynamic_graphs_with_pygame.egg-info/SOURCES.txt
 dynamic_graphs_with_pygame.egg-info/dependency_links.txt

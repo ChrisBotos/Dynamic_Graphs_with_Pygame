@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: dynamic-graphs-with-pygame
-Version: 1.0.4
+Version: 1.0.5
 Summary: A class for drawing dynamic graphs using Pygame.
 Home-page: https://github.com/ChrisBotos/Dynamic_Graphs_with_Pygame
 Author: Christos Botos
@@ -23,7 +23,7 @@ This package will be added to pip so a simple "pip install dynamic_graphs_with_p
 Otherwise, clone the GitHub repository.
 
 # Possible uses
-Right now the supported graphs that can be made are: histograms and line_graphs. 
+Right now the supported graphs that can be made are: histograms, line_graphs and scatter plots. 
 You may use the library's logic to add your own type of graphs as well! 
 It is fairly easy just look at how the existing functions were made and do something similar.
 Attention! Pygame has limitations with displaying very small objects, take note of that and look at how the case of histogram bin width < 1 is handled.
@@ -70,4 +70,11 @@ You may change that, look at the scroll function.
 
 Attention: For the histogram, if you want some of your bins to be displayed as negative along the x_axis take advantage of move_zero_along_x_axis parameter to set which bin corresponds to the zero position.
 
+Attention: If your arrays are getting ever bigger the dynamic graphs may start lagging after a while. 
+A solution would be to maybe delete some elements from the arrays if their lengths pass a specific threshold.
+
+# Was made using
+Python 3.12.2
+Pygame 2.5.2
+numpy 1.26.4
 
