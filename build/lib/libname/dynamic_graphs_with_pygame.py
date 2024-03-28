@@ -52,15 +52,15 @@ class dynamic_pygame_graphs_class:
                           graph_y=500,
                           graph_x_axis_name='',
                           graph_y_axis_name='',
-                          x_indicator_points=5,
-                          y_indicator_points=5,
+                          x_tick_marks=5,
+                          y_tick_marks=5,
                           y_amplifier=1,
-                          graph_indicators_font=None,
-                          graph_indicators_text_color=(0, 0, 0),
-                          graph_indicators_text_space_from_x_axis=10,
-                          graph_indicators_text_space_from_y_axis=20,
+                          graph_tick_marks_font=None,
+                          graph_tick_marks_text_color=(0, 0, 0),
+                          graph_tick_marks_text_space_from_x_axis=10,
+                          graph_tick_marks_text_space_from_y_axis=20,
                           move_zero_along_x_axis=0,
-                          move_zero_along_x_axis_indicator_text_color=(0, 0, 0),
+                          move_zero_along_x_axis_tick_mark_text_color=(0, 0, 0),
                           bin_array_is_given_as_x_values=True,
                           have_extra_bin=True):
 
@@ -75,13 +75,13 @@ class dynamic_pygame_graphs_class:
         - graph_y: The height of the graph area.
         - graph_x_axis_name: The label for the x-axis.
         - graph_y_axis_name: The label for the y-axis.
-        - x_indicator_points: The number of x-axis indicator points.
-        - y_indicator_points: The number of y-axis indicator points.
+        - x_tick_marks: The number of x-axis tick marks.
+        - y_tick_marks: The number of y-axis tick marks.
         - y_amplifier: The amplification factor for y-values.
-        - graph_indicators_font: The font for graph indicators.
-        - graph_indicators_text_color: The color of graph indicator text.
-        - graph_indicators_text_space_from_x_axis: Space between text and x-axis.
-        - graph_indicators_text_space_from_y_axis: Space between text and y-axis.
+        - graph_tick_marks_font: The font for graph tick_marks.
+        - graph_tick_marks_text_color: The color of graph tick_mark text.
+        - graph_tick_marks_text_space_from_x_axis: Space between text and x-axis.
+        - graph_tick_marks_text_space_from_y_axis: Space between text and y-axis.
         - move_zero_along_x_axis: The number of bins to move the (y==0 & x==0) point to the right or to the left.
         - bin_array_is_given_as_x_values: A boolean indicating whether bin_array is given as x_values.
         - have_extra_bin: A boolean indicating whether to include an extra bin when x_values are not perfectly divided into bins.
@@ -95,7 +95,7 @@ class dynamic_pygame_graphs_class:
         # It allows for transparent objects.
         # Look at the draw_rect_alpha function in this class for a clever way of drawing semi_transparent objects in pygame.
         #
-        # The indicator_points parameters account for the amount of indicators along a specific axis.
+        # The tick_marks parameters account for the amount of tick_marks along a specific axis.
         #
         # The y_amplifier is a variable that is multiplied with all the y values.
         #
@@ -110,25 +110,25 @@ class dynamic_pygame_graphs_class:
 
         x_values = np.array(x_values)  # Accounting for the case of a python list.
 
-        if graph_indicators_font is None:
-            graph_indicators_font = pygame.font.SysFont("Helvetica", 10)
+        if graph_tick_marks_font is None:
+            graph_tick_marks_font = pygame.font.SysFont("Helvetica", 10)
             font_size = 10
         else:
-            font_size = graph_indicators_font.get_height()
+            font_size = graph_tick_marks_font.get_height()
 
         """Draw the graph axes"""
         pygame.draw.line(self.screen, (0, 0, 0), (self.x, self.y), (self.x, self.y + graph_y))
         pygame.draw.line(self.screen, (0, 0, 0), (self.x, self.y + graph_y), (self.x + graph_x, self.y + graph_y))
 
         # Draw the x_axis name
-        img = graph_indicators_font.render(graph_x_axis_name, True, graph_indicators_text_color)
-        self.screen.blit(img, (self.x + graph_x + graph_indicators_text_space_from_x_axis * 2,
-                               self.y + graph_y + graph_indicators_text_space_from_x_axis * 2))
+        img = graph_tick_marks_font.render(graph_x_axis_name, True, graph_tick_marks_text_color)
+        self.screen.blit(img, (self.x + graph_x + graph_tick_marks_text_space_from_x_axis * 2,
+                               self.y + graph_y + graph_tick_marks_text_space_from_x_axis * 2))
 
         # Draw the y_axis name
-        img = graph_indicators_font.render(graph_y_axis_name, True, graph_indicators_text_color)
-        self.screen.blit(img, (self.x - graph_indicators_text_space_from_y_axis * 2,
-                               self.y - graph_indicators_text_space_from_y_axis * 2))
+        img = graph_tick_marks_font.render(graph_y_axis_name, True, graph_tick_marks_text_color)
+        self.screen.blit(img, (self.x - graph_tick_marks_text_space_from_y_axis * 2,
+                               self.y - graph_tick_marks_text_space_from_y_axis * 2))
 
 
         """Returning, if the size of the x_values array is 0"""
@@ -164,7 +164,7 @@ class dynamic_pygame_graphs_class:
         graph_bin_size = graph_x / num_of_bins
 
         # If the graph_bin_size is below 1 that is not possible for pygame. so we need to make everything under 1 to 1.
-        # x_resized helps us make the values of the indicators the actual values.
+        # x_resized helps us make the values of the tick_marks the actual values.
         if graph_bin_size < 1:
             graph_bin_size = 1
 
@@ -188,33 +188,33 @@ class dynamic_pygame_graphs_class:
             counter += 1
 
 
-        """Draw the indicator_points"""
+        """Draw the tick_marks"""
         # The move_zero_along_x_axis is measured in bins so this is how we extract the actual x value from it.
         move_zero_along_x_axis_in_actual_value = move_zero_along_x_axis * bin_size
 
-        # This shows how many bins or how many bars are displayed between two indicator points.
-        num_of_bins_between_two_x_indicator_points = int(graph_x / x_indicator_points / graph_bin_size)
+        # This shows how many bins or how many bars are displayed between two tick marks.
+        num_of_bins_between_two_x_tick_marks = int(graph_x / x_tick_marks / graph_bin_size)
 
-        # This shows how many actual values of x exist between two indicator_points.
-        distance_between_two_x_indicator_points = num_of_bins_between_two_x_indicator_points * bin_size
+        # This shows how many actual values of x exist between two tick_marks.
+        distance_between_two_x_tick_marks = num_of_bins_between_two_x_tick_marks * bin_size
 
-        # This shows how many actual values of y exist between two indicator_points.
-        distance_between_two_y_indicator_points = graph_y / y_indicator_points / y_amplifier
+        # This shows how many actual values of y exist between two tick_marks.
+        distance_between_two_y_tick_marks = graph_y / y_tick_marks / y_amplifier
 
 
-        self.draw_indicators(graph_x,
+        self.draw_tick_marks(graph_x,
                              graph_y,
-                             x_indicator_points,
-                             y_indicator_points,
-                             graph_indicators_font,
-                             distance_between_two_x_indicator_points,
-                             distance_between_two_y_indicator_points,
-                             graph_indicators_text_color,
-                             graph_indicators_text_space_from_x_axis,
-                             graph_indicators_text_space_from_y_axis,
+                             x_tick_marks,
+                             y_tick_marks,
+                             graph_tick_marks_font,
+                             distance_between_two_x_tick_marks,
+                             distance_between_two_y_tick_marks,
+                             graph_tick_marks_text_color,
+                             graph_tick_marks_text_space_from_x_axis,
+                             graph_tick_marks_text_space_from_y_axis,
                              font_size,
                              move_zero_along_x_axis_in_actual_value,
-                             move_zero_along_x_axis_indicator_text_color)
+                             move_zero_along_x_axis_tick_mark_text_color)
 
 
 
@@ -228,13 +228,13 @@ class dynamic_pygame_graphs_class:
                            graph_y=500,
                            graph_x_axis_name='',
                            graph_y_axis_name='',
-                           x_indicator_points=5,
-                           y_indicator_points=5,
+                           x_tick_marks=5,
+                           y_tick_marks=5,
                            y_amplifier=1,
-                           graph_indicators_font=None,
-                           graph_indicators_text_color=(0, 0, 0),
-                           graph_indicators_text_space_from_x_axis=10,
-                           graph_indicators_text_space_from_y_axis=20):
+                           graph_tick_marks_font=None,
+                           graph_tick_marks_text_color=(0, 0, 0),
+                           graph_tick_marks_text_space_from_x_axis=10,
+                           graph_tick_marks_text_space_from_y_axis=20):
 
         """Draws a dynamic line graph using Pygame.
 
@@ -246,23 +246,23 @@ class dynamic_pygame_graphs_class:
         - graph_y: The height of the graph area.
         - graph_x_axis_name: The label for the x-axis.
         - graph_y_axis_name: The label for the y-axis.
-        - x_indicator_points: The number of x-axis indicator points.
-        - y_indicator_points: The number of y-axis indicator points.
+        - x_tick_marks: The number of x-axis tick marks.
+        - y_tick_marks: The number of y-axis tick marks.
         - y_amplifier: The amplification factor for y-values.
-        - graph_indicators_font: The font for graph indicators.
-        - graph_indicators_text_color: The color of graph indicator text.
-        - graph_indicators_text_space_from_x_axis: Space between text and x-axis.
-        - graph_indicators_text_space_from_y_axis: Space between text and y-axis.
+        - graph_tick_marks_font: The font for graph tick_marks.
+        - graph_tick_marks_text_color: The color of graph tick_mark text.
+        - graph_tick_marks_text_space_from_x_axis: Space between text and x-axis.
+        - graph_tick_marks_text_space_from_y_axis: Space between text and y-axis.
         """
 
         x_values = np.array(x_values)  # Accounting for the case of a python list.
         y_values = np.array(y_values)  # Accounting for the case of a python list.
 
-        if graph_indicators_font is None:
-            graph_indicators_font = pygame.font.SysFont("Helvetica", 10)
+        if graph_tick_marks_font is None:
+            graph_tick_marks_font = pygame.font.SysFont("Helvetica", 10)
             font_size = 10
         else:
-            font_size = graph_indicators_font.get_height()
+            font_size = graph_tick_marks_font.get_height()
 
 
         """Draw the graph axes"""
@@ -270,14 +270,14 @@ class dynamic_pygame_graphs_class:
         pygame.draw.line(self.screen, (0, 0, 0), (self.x, self.y + graph_y), (self.x + graph_x, self.y + graph_y))
 
         # Draw the x_axis name
-        img = graph_indicators_font.render(graph_x_axis_name, True, graph_indicators_text_color)
-        self.screen.blit(img, (self.x - graph_indicators_text_space_from_x_axis * 2,
-                               self.y - graph_indicators_text_space_from_x_axis * 2))
+        img = graph_tick_marks_font.render(graph_x_axis_name, True, graph_tick_marks_text_color)
+        self.screen.blit(img, (self.x - graph_tick_marks_text_space_from_x_axis * 2,
+                               self.y - graph_tick_marks_text_space_from_x_axis * 2))
 
         # Draw the y_axis name
-        img = graph_indicators_font.render(graph_y_axis_name, True, graph_indicators_text_color)
-        self.screen.blit(img, (self.x + graph_x + graph_indicators_text_space_from_x_axis * 2,
-                               self.y + graph_y + graph_indicators_text_space_from_x_axis * 2))
+        img = graph_tick_marks_font.render(graph_y_axis_name, True, graph_tick_marks_text_color)
+        self.screen.blit(img, (self.x + graph_x + graph_tick_marks_text_space_from_x_axis * 2,
+                               self.y + graph_y + graph_tick_marks_text_space_from_x_axis * 2))
 
 
         """Returning, if the size of the x_values array is 0"""
@@ -306,22 +306,22 @@ class dynamic_pygame_graphs_class:
                              )
 
 
-        """Draw the indicator_points"""
-        # This shows how many actual values of x and y exist between two indicator_points.
-        distance_between_two_x_indicator_points = max_x // x_indicator_points
-        distance_between_two_y_indicator_points = max_y // y_indicator_points / y_amplifier
+        """Draw the tick_marks"""
+        # This shows how many actual values of x and y exist between two tick_marks.
+        distance_between_two_x_tick_marks = max_x // x_tick_marks
+        distance_between_two_y_tick_marks = max_y // y_tick_marks / y_amplifier
 
 
-        self.draw_indicators(graph_x,
+        self.draw_tick_marks(graph_x,
                              graph_y,
-                             x_indicator_points,
-                             y_indicator_points,
-                             graph_indicators_font,
-                             distance_between_two_x_indicator_points,
-                             distance_between_two_y_indicator_points,
-                             graph_indicators_text_color,
-                             graph_indicators_text_space_from_x_axis,
-                             graph_indicators_text_space_from_y_axis,
+                             x_tick_marks,
+                             y_tick_marks,
+                             graph_tick_marks_font,
+                             distance_between_two_x_tick_marks,
+                             distance_between_two_y_tick_marks,
+                             graph_tick_marks_text_color,
+                             graph_tick_marks_text_space_from_x_axis,
+                             graph_tick_marks_text_space_from_y_axis,
                              font_size,
                              move_zero_along_x_axis_in_actual_value=0)
 
@@ -347,53 +347,53 @@ class dynamic_pygame_graphs_class:
         surface.blit(shape_surf, coordinates)
 
 
-    def draw_indicators(self,
+    def draw_tick_marks(self,
                         graph_x,
                         graph_y,
-                        x_indicator_points,
-                        y_indicator_points,
-                        graph_indicators_font,
-                        distance_between_two_x_indicator_points,
-                        distance_between_two_y_indicator_points,
-                        graph_indicators_text_color,
-                        graph_indicators_text_space_from_x_axis,
-                        graph_indicators_text_space_from_y_axis,
+                        x_tick_marks,
+                        y_tick_marks,
+                        graph_tick_marks_font,
+                        distance_between_two_x_tick_marks,
+                        distance_between_two_y_tick_marks,
+                        graph_tick_marks_text_color,
+                        graph_tick_marks_text_space_from_x_axis,
+                        graph_tick_marks_text_space_from_y_axis,
                         font_size,
                         move_zero_along_x_axis_in_actual_value=0,
-                        move_zero_along_x_axis_indicator_text_color=(255, 0, 0)):
+                        move_zero_along_x_axis_tick_mark_text_color=(255, 0, 0)):
 
 
-        """Draw the x_indicator_points"""
-        # The indicator position is indicates how far right from the start of the x_axis the indicator is placed.
-        x_indicator_position = self.x + graph_x // x_indicator_points
+        """Draw the x_tick_marks"""
+        # The tick_mark position is indicates how far right from the start of the x_axis the tick_mark is placed.
+        x_tick_mark_position = self.x + graph_x // x_tick_marks
 
-        for counter in range(1, x_indicator_points + 1):
-            # We draw a line with a height of 2  (from -1 to 1 as seen below) which is the indicator.
-            pygame.draw.line(self.screen, (0, 0, 0), (x_indicator_position, self.y + graph_y + 1), (x_indicator_position, self.y + graph_y - 1))
+        for counter in range(1, x_tick_marks + 1):
+            # We draw a line with a height of 2  (from -1 to 1 as seen below) which is the tick_mark.
+            pygame.draw.line(self.screen, (0, 0, 0), (x_tick_mark_position, self.y + graph_y + 1), (x_tick_mark_position, self.y + graph_y - 1))
 
-            # We draw the values of the indicators.
-            img = graph_indicators_font.render(str(int(distance_between_two_x_indicator_points * counter - move_zero_along_x_axis_in_actual_value)), True, graph_indicators_text_color)
-            self.screen.blit(img, (x_indicator_position + 1, self.y + graph_y + graph_indicators_text_space_from_x_axis))
+            # We draw the values of the tick_marks.
+            img = graph_tick_marks_font.render(str(int(distance_between_two_x_tick_marks * counter - move_zero_along_x_axis_in_actual_value)), True, graph_tick_marks_text_color)
+            self.screen.blit(img, (x_tick_mark_position + 1, self.y + graph_y + graph_tick_marks_text_space_from_x_axis))
 
-            # We go to the next indicator.
-            x_indicator_position += graph_x // x_indicator_points
+            # We go to the next tick_mark.
+            x_tick_mark_position += graph_x // x_tick_marks
 
         # This is to draw the zero.
-        img = graph_indicators_font.render("0", True, move_zero_along_x_axis_indicator_text_color)
-        self.screen.blit(img, (self.x + move_zero_along_x_axis_in_actual_value, self.y + graph_y + graph_indicators_text_space_from_x_axis))
+        img = graph_tick_marks_font.render("0", True, move_zero_along_x_axis_tick_mark_text_color)
+        self.screen.blit(img, (self.x + move_zero_along_x_axis_in_actual_value, self.y + graph_y + graph_tick_marks_text_space_from_x_axis))
 
 
-        """Draw the y_indicator_points"""
-        y_indicator_position = self.y + graph_y - graph_y // y_indicator_points
+        """Draw the y_tick_marks"""
+        y_tick_mark_position = self.y + graph_y - graph_y // y_tick_marks
 
-        for counter in range(1, y_indicator_points + 1):
-            # We draw a line with a height of 2  (from -1 to 1 as seen below) which is the indicator.
-            pygame.draw.line(self.screen, (0, 0, 0), (self.x + 1, self.y + y_indicator_position), (self.x - 1, self.y + y_indicator_position))
+        for counter in range(1, y_tick_marks + 1):
+            # We draw a line with a height of 2  (from -1 to 1 as seen below) which is the tick_mark.
+            pygame.draw.line(self.screen, (0, 0, 0), (self.x + 1, self.y + y_tick_mark_position), (self.x - 1, self.y + y_tick_mark_position))
 
-            # We draw the values of the indicators.
-            img = graph_indicators_font.render(str(int(distance_between_two_y_indicator_points * counter)), True, graph_indicators_text_color)
-            self.screen.blit(img, (self.x - graph_indicators_text_space_from_y_axis, y_indicator_position - font_size // 2))
+            # We draw the values of the tick_marks.
+            img = graph_tick_marks_font.render(str(int(distance_between_two_y_tick_marks * counter)), True, graph_tick_marks_text_color)
+            self.screen.blit(img, (self.x - graph_tick_marks_text_space_from_y_axis, y_tick_mark_position - font_size // 2))
 
-            # We go to the next indicator.
-            y_indicator_position -= graph_y // y_indicator_points
+            # We go to the next tick_mark.
+            y_tick_mark_position -= graph_y // y_tick_marks
 

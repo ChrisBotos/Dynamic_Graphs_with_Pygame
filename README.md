@@ -6,7 +6,7 @@ This package will be added to pip so a simple "pip install dynamic_graphs_with_p
 Otherwise, clone the GitHub repository.
 
 # Possible uses
-Right now the supported graphs that can be made are: histograms and line_graphs. 
+Right now the supported graphs that can be made are: histograms, line_graphs and scatter plots. 
 You may use the library's logic to add your own type of graphs as well! 
 It is fairly easy just look at how the existing functions were made and do something similar.
 Attention! Pygame has limitations with displaying very small objects, take note of that and look at how the case of histogram bin width < 1 is handled.
@@ -33,15 +33,15 @@ pygame_graphs_instance.dynamic_histogram(x_values=np.array([1, 0, 2, 3, 0, 1]),
                                          graph_y=500,
                                          graph_x_axis_name='',
                                          graph_y_axis_name='',
-                                         x_indicator_points=5,
-                                         y_indicator_points=5,
+                                         x_tick_marks=5,
+                                         y_tick_marks=5,
                                          y_amplifier=1,
-                                         graph_indicators_font=None,
-                                         graph_indicators_text_color=(0, 0, 0),
-                                         graph_indicators_text_space_from_x_axis=10,
-                                         graph_indicators_text_space_from_y_axis=20,
+                                         graph_tick_marks_font=None,
+                                         graph_tick_marks_text_color=(0, 0, 0),
+                                         graph_tick_marks_text_space_from_x_axis=10,
+                                         graph_tick_marks_text_space_from_y_axis=20,
                                          move_zero_along_x_axis=0,
-                                         move_zero_along_x_axis_indicator_text_color=(0, 0, 0),
+                                         move_zero_along_x_axis_tick_mark_text_color=(0, 0, 0),
                                          bin_array_is_given_as_x_values=True,
                                          have_extra_bin=True)
 
@@ -52,3 +52,11 @@ Scrolling is achieved by the keyboard arrows by default.
 You may change that, look at the scroll function.
 
 Attention: For the histogram, if you want some of your bins to be displayed as negative along the x_axis take advantage of move_zero_along_x_axis parameter to set which bin corresponds to the zero position.
+
+Attention: If your arrays are getting ever bigger the dynamic graphs may start lagging after a while. 
+A solution would be to maybe delete some elements from the arrays if their lengths pass a specific threshold.
+
+# Was made using
+Python 3.12.2
+Pygame 2.5.2
+numpy 1.26.4

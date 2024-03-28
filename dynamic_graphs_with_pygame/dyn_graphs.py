@@ -181,9 +181,9 @@ class dynamic_pygame_graphs_class:
 
                 # I use semi_transparency in case we want to show one graph behind the other.
                 # This function draws objects in pygame that can also be transparent.
-                self.draw_rect_alpha(self.screen,
-                                     bar_color,
-                                     bar_coordinates)
+                draw_rect_alpha(self.screen,
+                                bar_color,
+                                bar_coordinates)
 
             counter += 1
 
@@ -199,7 +199,7 @@ class dynamic_pygame_graphs_class:
         distance_between_two_x_tick_marks = num_of_bins_between_two_x_tick_marks * bin_size
 
         # This shows how many actual values of y exist between two tick_marks.
-        distance_between_two_y_tick_marks = graph_y / y_tick_marks / y_amplifier
+        distance_between_two_y_tick_marks = int(graph_y / y_tick_marks / y_amplifier)
 
 
         self.draw_tick_marks(graph_x,
@@ -223,7 +223,9 @@ class dynamic_pygame_graphs_class:
     def dynamic_line_graph(self,
                            x_values=np.array([]),
                            y_values=np.array([]),
+                           normalize=False,
                            line_color=(255, 0, 0, 123),
+                           line_width=2,
                            graph_x=500,
                            graph_y=500,
                            graph_x_axis_name='',
@@ -241,6 +243,7 @@ class dynamic_pygame_graphs_class:
         Parameters:
         - x_values: A list or array of x-values.
         - y_values: A list or array of y-values.
+        - normalize: If this is set to True it normalizes the value so that the line always reaches from one end of the graph to the other.
         - line_color: The color of the line graph.
         - graph_x: The width of the graph area.
         - graph_y: The height of the graph area.
@@ -255,8 +258,8 @@ class dynamic_pygame_graphs_class:
         - graph_tick_marks_text_space_from_y_axis: Space between text and y-axis.
         """
 
-        x_values = np.array(x_values)  # Accounting for the case of a python list.
-        y_values = np.array(y_values)  # Accounting for the case of a python list.
+        x_values = np.sort(np.array(x_values))  # Accounting for the case of a python list.
+        y_values = np.sort(np.array(y_values)) * y_amplifier  # Accounting for the case of a python list.
 
         if graph_tick_marks_font is None:
             graph_tick_marks_font = pygame.font.SysFont("Helvetica", 10)
@@ -288,13 +291,15 @@ class dynamic_pygame_graphs_class:
         """Normalize x and y values"""
         max_x = np.max(x_values)
         max_y = np.max(y_values)
-        normalized_x_values = (x_values / max_x) * graph_x
-        normalized_y_values = (y_values / max_y) * graph_y
+
+        if normalize:
+            x_values = x_values / max_x * graph_x
+            y_values = y_values / max_y * graph_y
 
 
         """Calculate the actual x and y values on screen"""
-        on_screen_x_values = self.x + normalized_x_values
-        on_screen_y_values = self.y + graph_y - normalized_y_values
+        on_screen_x_values = self.x + x_values
+        on_screen_y_values = self.y + graph_y - y_values
 
 
         """Draw line segments"""
@@ -302,14 +307,20 @@ class dynamic_pygame_graphs_class:
             pygame.draw.line(self.screen,
                              line_color,
                              (on_screen_x_values[index], on_screen_y_values[index]),
-                             (on_screen_x_values[index + 1], on_screen_y_values[index + 1])
+                             (on_screen_x_values[index + 1], on_screen_y_values[index + 1]),
+                             line_width
                              )
 
 
         """Draw the tick_marks"""
         # This shows how many actual values of x and y exist between two tick_marks.
-        distance_between_two_x_tick_marks = max_x // x_tick_marks
-        distance_between_two_y_tick_marks = max_y // y_tick_marks / y_amplifier
+        if normalize:
+            distance_between_two_x_tick_marks = int(max_x / x_tick_marks)
+            distance_between_two_y_tick_marks = int(max_y / y_tick_marks / y_amplifier)
+
+        else:
+            distance_between_two_x_tick_marks = int(graph_x / x_tick_marks)
+            distance_between_two_y_tick_marks = int(graph_y / y_tick_marks / y_amplifier)
 
 
         self.draw_tick_marks(graph_x,
@@ -326,6 +337,140 @@ class dynamic_pygame_graphs_class:
                              move_zero_along_x_axis_in_actual_value=0)
 
 
+    def dynamic_scatter_plot(self,
+                             x_values=np.array([]),
+                             y_values=np.array([]),
+                             shape="circle",
+                             radius=2,
+                             normalize=False,
+                             point_color=(255, 0, 0, 123),
+                             graph_x=500,
+                             graph_y=500,
+                             graph_x_axis_name='',
+                             graph_y_axis_name='',
+                             x_tick_marks=5,
+                             y_tick_marks=5,
+                             y_amplifier=1,
+                             graph_tick_marks_font=None,
+                             graph_tick_marks_text_color=(0, 0, 0),
+                             graph_tick_marks_text_space_from_x_axis=10,
+                             graph_tick_marks_text_space_from_y_axis=20):
+
+        """Draws a dynamic line graph using Pygame.
+
+        Parameters:
+        - x_values: A list or array of x-values.
+        - y_values: A list or array of y-values.
+        - shape: The shape of the points,
+        - radius: For the circles it is the radius and for squares a side's half,
+        - normalize: If this is set to True it normalizes the value so that the line always reaches from one end of the graph to the other.
+        - point_color: The color of the line graph.
+        - graph_x: The width of the graph area.
+        - graph_y: The height of the graph area.
+        - graph_x_axis_name: The label for the x-axis.
+        - graph_y_axis_name: The label for the y-axis.
+        - x_tick_marks: The number of x-axis tick marks.
+        - y_tick_marks: The number of y-axis tick marks.
+        - y_amplifier: The amplification factor for y-values.
+        - graph_tick_marks_font: The font for graph tick_marks.
+        - graph_tick_marks_text_color: The color of graph tick_mark text.
+        - graph_tick_marks_text_space_from_x_axis: Space between text and x-axis.
+        - graph_tick_marks_text_space_from_y_axis: Space between text and y-axis.
+        """
+
+        if shape != "circle" and shape != "square":
+            raise Exception("Only circle and square are supported as parameters for shape in the scatter plot.")
+
+        x_values = np.sort(np.array(x_values))  # Accounting for the case of a python list.
+        y_values = np.sort(np.array(y_values)) * y_amplifier  # Accounting for the case of a python list.
+
+        if graph_tick_marks_font is None:
+            graph_tick_marks_font = pygame.font.SysFont("Helvetica", 10)
+            font_size = 10
+        else:
+            font_size = graph_tick_marks_font.get_height()
+
+
+        """Draw the graph axes"""
+        pygame.draw.line(self.screen, (0, 0, 0), (self.x, self.y), (self.x, self.y + graph_y))
+        pygame.draw.line(self.screen, (0, 0, 0), (self.x, self.y + graph_y), (self.x + graph_x, self.y + graph_y))
+
+        # Draw the x_axis name
+        img = graph_tick_marks_font.render(graph_x_axis_name, True, graph_tick_marks_text_color)
+        self.screen.blit(img, (self.x - graph_tick_marks_text_space_from_x_axis * 2,
+                               self.y - graph_tick_marks_text_space_from_x_axis * 2))
+
+        # Draw the y_axis name
+        img = graph_tick_marks_font.render(graph_y_axis_name, True, graph_tick_marks_text_color)
+        self.screen.blit(img, (self.x + graph_x + graph_tick_marks_text_space_from_x_axis * 2,
+                               self.y + graph_y + graph_tick_marks_text_space_from_x_axis * 2))
+
+
+        """Returning, if the size of the x_values array is 0"""
+        if x_values.size < 1 or y_values.size < 1:
+            return
+
+
+        """Normalize x and y values"""
+        max_x = np.max(x_values)
+        max_y = np.max(y_values)
+
+        if normalize:
+            x_values = x_values / max_x * graph_x
+            y_values = y_values / max_y * graph_y
+
+
+        """Calculate the actual x and y values on screen"""
+        on_screen_x_values = self.x + x_values
+        on_screen_y_values = self.y + graph_y - y_values
+
+
+        """Draw points"""
+        for index in range(len(on_screen_x_values)):
+
+            if shape == "circle":
+                draw_circle_alpha(self.screen,
+                                  point_color,
+                                  (on_screen_x_values[index], on_screen_y_values[index]),
+                                  radius)
+
+            elif shape == "square":
+                coordinates = (on_screen_x_values[index] - radius,
+                               on_screen_y_values[index] - radius,
+                               radius * 2,
+                               radius * 2)
+
+                draw_rect_alpha(self.screen,
+                                point_color,
+                                coordinates)
+
+
+        """Draw the tick_marks"""
+        # This shows how many actual values of x and y exist between two tick_marks.
+        if normalize:
+            distance_between_two_x_tick_marks = int(max_x / x_tick_marks)
+            distance_between_two_y_tick_marks = int(max_y / y_tick_marks / y_amplifier)
+
+        else:
+            distance_between_two_x_tick_marks = int(graph_x / x_tick_marks)
+            distance_between_two_y_tick_marks = int(graph_y / y_tick_marks / y_amplifier)
+
+
+        self.draw_tick_marks(graph_x,
+                             graph_y,
+                             x_tick_marks,
+                             y_tick_marks,
+                             graph_tick_marks_font,
+                             distance_between_two_x_tick_marks,
+                             distance_between_two_y_tick_marks,
+                             graph_tick_marks_text_color,
+                             graph_tick_marks_text_space_from_x_axis,
+                             graph_tick_marks_text_space_from_y_axis,
+                             font_size,
+                             move_zero_along_x_axis_in_actual_value=0)
+
+
+    """Non_Graph useful functions for the class"""
     def draw_graph_text(self,
                         text_to_be_written='',
                         text_space_from_x_axis=500,
@@ -333,18 +478,14 @@ class dynamic_pygame_graphs_class:
                         font=None,
                         text_color=(255, 255, 255)):
 
+        # Draws text on screen in a position relative to the graph positions.
+
 
         if font is None:
             font = pygame.font.SysFont("Helvetica", 10)
 
         img = font.render(text_to_be_written, True, text_color)
         self.screen.blit(img, (self.x - text_space_from_x_axis, self.y + text_space_from_y_axis))
-
-
-    def draw_rect_alpha(self, surface, color, coordinates):  # Drawn a transparent rect
-        shape_surf = pygame.Surface(pygame.Rect(coordinates).size, pygame.SRCALPHA)
-        pygame.draw.rect(shape_surf, color, shape_surf.get_rect())
-        surface.blit(shape_surf, coordinates)
 
 
     def draw_tick_marks(self,
@@ -360,7 +501,10 @@ class dynamic_pygame_graphs_class:
                         graph_tick_marks_text_space_from_y_axis,
                         font_size,
                         move_zero_along_x_axis_in_actual_value=0,
-                        move_zero_along_x_axis_tick_mark_text_color=(255, 0, 0)):
+                        move_zero_along_x_axis_tick_mark_text_color=None):
+
+        if move_zero_along_x_axis_tick_mark_text_color is None:
+            move_zero_along_x_axis_tick_mark_text_color = graph_tick_marks_text_color
 
 
         """Draw the x_tick_marks"""
@@ -372,7 +516,7 @@ class dynamic_pygame_graphs_class:
             pygame.draw.line(self.screen, (0, 0, 0), (x_tick_mark_position, self.y + graph_y + 1), (x_tick_mark_position, self.y + graph_y - 1))
 
             # We draw the values of the tick_marks.
-            img = graph_tick_marks_font.render(str(int(distance_between_two_x_tick_marks * counter - move_zero_along_x_axis_in_actual_value)), True, graph_tick_marks_text_color)
+            img = graph_tick_marks_font.render(str(distance_between_two_x_tick_marks * counter - move_zero_along_x_axis_in_actual_value), True, graph_tick_marks_text_color)
             self.screen.blit(img, (x_tick_mark_position + 1, self.y + graph_y + graph_tick_marks_text_space_from_x_axis))
 
             # We go to the next tick_mark.
@@ -391,9 +535,73 @@ class dynamic_pygame_graphs_class:
             pygame.draw.line(self.screen, (0, 0, 0), (self.x + 1, self.y + y_tick_mark_position), (self.x - 1, self.y + y_tick_mark_position))
 
             # We draw the values of the tick_marks.
-            img = graph_tick_marks_font.render(str(int(distance_between_two_y_tick_marks * counter)), True, graph_tick_marks_text_color)
+            img = graph_tick_marks_font.render(str(distance_between_two_y_tick_marks * counter), True, graph_tick_marks_text_color)
             self.screen.blit(img, (self.x - graph_tick_marks_text_space_from_y_axis, y_tick_mark_position - font_size // 2))
 
             # We go to the next tick_mark.
             y_tick_mark_position -= graph_y // y_tick_marks
+
+
+"""Functions for drawing transparent or semi-transparent shapes in pygame"""
+# Explanation:
+# Pygame's display surface (the screen) doesn't support per-pixel alpha blending by default.
+# This means you can't directly draw transparent shapes onto the screen and expect them to blend seamlessly with the background.
+# To work around this limitation, you need to create a separate surface with an alpha channel using pygame.Surface with the flag pygame.SRCALPHA.
+# This creates a surface that can handle transparency.
+# You then draw your transparent shape onto this surface using Pygame's drawing functions like pygame.draw.rect or pygame.draw.circle.
+# Finally, you blit (copy) this transparent surface onto the screen or another surface using surface.blit.
+# This allows Pygame to handle the blending of the transparent pixels with the background pixels correctly during the blitting process,
+# resulting in the desired transparent effect.
+
+
+"""Draw rectangles"""
+def draw_rect_alpha(surface,
+                    color,
+                    coordinates):
+
+    """
+    Draws a transparent rectangle on a Pygame surface.
+
+    Parameters:
+        surface (pygame.Surface): Pygame surface onto which the rectangle will be drawn.
+        color (tuple): Color of the rectangle (RGB or RGBA tuple).
+        coordinates (tuple): Tuple representing the position and size of the rectangle (x, y, width, height).
+    """
+
+    # Create a new surface with an alpha channel (transparency)
+    shape_surf = pygame.Surface(pygame.Rect(coordinates).size, pygame.SRCALPHA)
+
+    # Draw a rectangle with the specified color on the transparent surface
+    pygame.draw.rect(shape_surf, color, shape_surf.get_rect())
+
+    # Blit (copy) the transparent surface onto the target surface at the specified coordinates
+    surface.blit(shape_surf, coordinates)
+
+
+"""Draw circles"""
+def draw_circle_alpha(surface,
+                      color,
+                      center,
+                      radius):
+
+    """
+    Draws a transparent circle on a Pygame surface.
+
+    Parameters:
+        surface (pygame.Surface): Pygame surface onto which the circle will be drawn.
+        color (tuple): Color of the circle (RGB or RGBA tuple).
+        center (tuple): Tuple representing the center coordinates of the circle (x, y).
+        radius (int): Radius of the circle.
+    """
+
+    # Create a new surface with an alpha channel (transparency)
+    shape_surf = pygame.Surface((radius * 2, radius * 2), pygame.SRCALPHA)
+
+    # Draw a circle with the specified color on the transparent surface
+    pygame.draw.circle(shape_surf, color, (radius, radius), radius)
+
+    # Blit (copy) the transparent surface onto the target surface with the center adjusted
+    surface.blit(shape_surf, (center[0] - radius, center[1] - radius))
+
+
 
