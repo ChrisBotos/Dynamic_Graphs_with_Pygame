@@ -258,8 +258,8 @@ class dynamic_pygame_graphs_class:
         - graph_tick_marks_text_space_from_y_axis: Space between text and y-axis.
         """
 
-        x_values = np.sort(np.array(x_values))  # Accounting for the case of a python list.
-        y_values = np.sort(np.array(y_values)) * y_amplifier  # Accounting for the case of a python list.
+        x_values = np.array(x_values)  # Accounting for the case of a python list.
+        y_values = np.array(y_values) * y_amplifier  # Accounting for the case of a python list.
 
         if graph_tick_marks_font is None:
             graph_tick_marks_font = pygame.font.SysFont("Helvetica", 10)
@@ -381,8 +381,8 @@ class dynamic_pygame_graphs_class:
         if shape != "circle" and shape != "square":
             raise Exception("Only circle and square are supported as parameters for shape in the scatter plot.")
 
-        x_values = np.sort(np.array(x_values))  # Accounting for the case of a python list.
-        y_values = np.sort(np.array(y_values)) * y_amplifier  # Accounting for the case of a python list.
+        x_values = np.array(x_values)  # Accounting for the case of a python list.
+        y_values = np.array(y_values) * y_amplifier  # Accounting for the case of a python list.
 
         if graph_tick_marks_font is None:
             graph_tick_marks_font = pygame.font.SysFont("Helvetica", 10)
