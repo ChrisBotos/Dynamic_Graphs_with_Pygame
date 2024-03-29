@@ -175,35 +175,33 @@ while running:
                                                    graph_tick_marks_text_space_from_y_axis=20)
 
 
-        if what_to_show_dictionary["show_scatter_plot"]:
-            # Drawing a scatter plot a bit further away to see that you can have multiple graphs in the same screen at any coordinates you desire.
-            # Move with the arrow keys to see it.
-            # To draw at different coordinates you need a new instance of the class or to manually change the x and y coordinates with pygame_graphs_instance1.x = ...
-            # Here I have a different instance ready.
+    if what_to_show_dictionary["show_scatter_plot"]:
+        # Drawing a scatter plot a bit further away to see that you can have multiple graphs in the same screen at any coordinates you desire.
+        # Move with the arrow keys to see it.
+        # To draw at different coordinates you need a new instance of the class or to manually change the x and y coordinates with pygame_graphs_instance1.x = ...
+        # Here I have a different instance ready.
 
-            if not pause:
-                x_randomized_array2 = np.random.uniform(0, 600, 50)
-                y_randomized_array2 = np.random.uniform(0, 400, 50)
+        if not pause:
+            x_randomized_array2 = np.random.uniform(0, 600, 50)
+            y_randomized_array2 = np.random.uniform(0, 400, 50)
 
-            pygame_graphs_instance3.dynamic_scatter_plot(x_values=x_randomized_array2,
-                                                         y_values=y_randomized_array2,
-                                                         shape="square",
-                                                         radius=2,
-                                                         normalize=False,
-                                                         point_color=(255, 0, 0, 123),
-                                                         graph_x=500,
-                                                         graph_y=500,
-                                                         graph_x_axis_name='',
-                                                         graph_y_axis_name='',
-                                                         x_tick_marks=5,
-                                                         y_tick_marks=5,
-                                                         y_amplifier=1,
-                                                         graph_tick_marks_font=None,
-                                                         graph_tick_marks_text_color=(0, 0, 0),
-                                                         graph_tick_marks_text_space_from_x_axis=10,
-                                                         graph_tick_marks_text_space_from_y_axis=20)
-
-
+        pygame_graphs_instance3.dynamic_scatter_plot(x_values=x_randomized_array2,
+                                                     y_values=y_randomized_array2,
+                                                     shape="square",
+                                                     radius=2,
+                                                     normalize=False,
+                                                     point_color=(255, 0, 0, 123),
+                                                     graph_x=500,
+                                                     graph_y=500,
+                                                     graph_x_axis_name='',
+                                                     graph_y_axis_name='',
+                                                     x_tick_marks=5,
+                                                     y_tick_marks=5,
+                                                     y_amplifier=1,
+                                                     graph_tick_marks_font=None,
+                                                     graph_tick_marks_text_color=(0, 0, 0),
+                                                     graph_tick_marks_text_space_from_x_axis=10,
+                                                     graph_tick_marks_text_space_from_y_axis=20)
 
     # Update the display
     pygame.display.flip()
