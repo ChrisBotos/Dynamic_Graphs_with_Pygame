@@ -516,7 +516,7 @@ class dynamic_pygame_graphs_class:
             pygame.draw.line(self.screen, (0, 0, 0), (x_tick_mark_position, self.y + graph_y + 1), (x_tick_mark_position, self.y + graph_y - 1))
 
             # We draw the values of the tick_marks.
-            img = graph_tick_marks_font.render(str(distance_between_two_x_tick_marks * counter - move_zero_along_x_axis_in_actual_value), True, graph_tick_marks_text_color)
+            img = graph_tick_marks_font.render(str(int(distance_between_two_x_tick_marks * counter - move_zero_along_x_axis_in_actual_value)), True, graph_tick_marks_text_color)
             self.screen.blit(img, (x_tick_mark_position + 1, self.y + graph_y + graph_tick_marks_text_space_from_x_axis))
 
             # We go to the next tick_mark.
@@ -535,7 +535,7 @@ class dynamic_pygame_graphs_class:
             pygame.draw.line(self.screen, (0, 0, 0), (self.x + 1, self.y + y_tick_mark_position), (self.x - 1, self.y + y_tick_mark_position))
 
             # We draw the values of the tick_marks.
-            img = graph_tick_marks_font.render(str(distance_between_two_y_tick_marks * counter), True, graph_tick_marks_text_color)
+            img = graph_tick_marks_font.render(str(int(distance_between_two_y_tick_marks * counter)), True, graph_tick_marks_text_color)
             self.screen.blit(img, (self.x - graph_tick_marks_text_space_from_y_axis, y_tick_mark_position - font_size // 2))
 
             # We go to the next tick_mark.
