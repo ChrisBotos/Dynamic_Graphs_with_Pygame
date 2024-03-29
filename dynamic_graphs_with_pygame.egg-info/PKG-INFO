@@ -5,15 +5,15 @@ Summary: A class for drawing dynamic graphs using Pygame.
 Home-page: https://github.com/ChrisBotos/Dynamic_Graphs_with_Pygame
 Author: Christos Botos
 Author-email: hcty02@gmail.com
+License: UNKNOWN
 Project-URL: LinkedIn, https://www.linkedin.com/in/your_username/
 Keywords: pygame graphs dynamic visualization
+Platform: UNKNOWN
 Classifier: Programming Language :: Python :: 3
 Classifier: License :: OSI Approved :: MIT License
 Classifier: Operating System :: OS Independent
 Description-Content-Type: text/markdown
 License-File: LICENSE
-Requires-Dist: pygame
-Requires-Dist: numpy
 
 # Dynamic_Graphs_with_Pygame
 This is a python library created using pygame that manages the creation of graphs that update dynamically displaying the changes of x and y over time.
@@ -77,3 +77,4 @@ A solution would be to maybe delete some elements from the arrays if their lengt
 Python 3.12.2
 Pygame 2.5.2
 numpy 1.26.4
+
