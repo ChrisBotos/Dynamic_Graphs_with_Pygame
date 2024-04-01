@@ -82,7 +82,7 @@ class dynamic_pygame_graphs_class:
         - graph_tick_marks_text_color: The color of graph tick_mark text.
         - graph_tick_marks_text_space_from_x_axis: Space between text and x-axis.
         - graph_tick_marks_text_space_from_y_axis: Space between text and y-axis.
-        - move_zero_along_x_axis: The number of bins to move the (y==0 & x==0) point to the right or to the left.
+        - move_zero_along_x_axis: The number of values (not bins) to move the (y==0 & x==0) point to the right or to the left.
         - bin_array_is_given_as_x_values: A boolean indicating whether bin_array is given as x_values.
         - have_extra_bin: A boolean indicating whether to include an extra bin when x_values are not perfectly divided into bins.
         """
@@ -100,7 +100,7 @@ class dynamic_pygame_graphs_class:
         # The y_amplifier is a variable that is multiplied with all the y values.
         #
         # The move_zero_along_x_axis parameter allows you to move the (y==0 & x==0) point to the right or to the left.
-        # It is measured in bins, its value showing the start of the bin that should start from 0 to bin_size.
+        # It is measured in actual value not bins.
         #
         # The extra bin accounts for the case where the x_values are not perfectly divided into the bins.
         # For example: raw_x_values = [1,3,0,4,1] with bin_size = 2.
