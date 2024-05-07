@@ -174,10 +174,18 @@ class dynamic_pygame_graphs_class:
         for bin_value in bin_array:
 
             if bin_value != 0:
-                bar_coordinates = (self.x + counter * graph_bin_size,
-                                   self.y + graph_y - bin_value * y_amplifier,
-                                   graph_bin_size,
-                                   bin_value * abs(y_amplifier))
+                bar_height = int(bin_value * y_amplifier)
+
+                if bar_height > 0:
+                    bar_coordinates = (self.x + counter * graph_bin_size,
+                                       self.y + graph_y - bar_height,
+                                       graph_bin_size,
+                                       bar_height)
+                else:
+                    bar_coordinates = (self.x + counter * graph_bin_size,
+                                       self.y + graph_y,
+                                       graph_bin_size,
+                                       np.abs(bar_height))
 
                 # I use semi_transparency in case we want to show one graph behind the other.
                 # This function draws objects in pygame that can also be transparent.
