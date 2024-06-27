@@ -1,6 +1,6 @@
 import pygame
 import numpy as np
-from dynamic_graphs_with_pygame.dyn_graphs import dynamic_pygame_graphs_class
+from dynamic_graphs_with_pygame.dyn_graphs import DynamicPygameGraphs
 
 # Run this script and play around with the keys 1,2,3,4,space and the arrow keys on your keyboard.
 
@@ -18,15 +18,15 @@ pygame.display.set_caption("Randomized NumPy Array")
 # Make the instances
 x = 30
 y = 30
-pygame_graphs_instance1 = dynamic_pygame_graphs_class(x, y, screen)
+pygame_graphs_instance1 = DynamicPygameGraphs(x, y, screen)
 
 x = 700
 y = -200
-pygame_graphs_instance2 = dynamic_pygame_graphs_class(x, y, screen)
+pygame_graphs_instance2 = DynamicPygameGraphs(x, y, screen)
 
 x = 800
 y = 500
-pygame_graphs_instance3 = dynamic_pygame_graphs_class(x, y, screen)
+pygame_graphs_instance3 = DynamicPygameGraphs(x, y, screen)
 
 # I would recommend making a dictionary of what graphs you want to show and play around with them using keyboard keys.
 what_to_show_dictionary = {

@@ -18,7 +18,7 @@ import pygame
 import numpy as np
 
 
-class dynamic_pygame_graphs_class:
+class DynamicPygameGraphs:
     def __init__(self, x, y, screen):
         self.reset(x, y, screen)
 
