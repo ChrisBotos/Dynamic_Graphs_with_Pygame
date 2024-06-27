@@ -1,8 +1,9 @@
 """
 Author: Christos Botos
-LinkedIn: https://www.linkedin.com/in/christos-botos-2369hcty3396
-Email: botoschristos@gmail.com
 GitHub: https://github.com/ChrisBotos
+PyPi: https://pypi.org/user/ChrisBotos
+Email: botoschristos@gmail.com
+LinkedIn: https://www.linkedin.com/in/christos-botos-2369hcty3396
 
 Project Starting Date: Autumn 2023
 

@@ -1,10 +1,11 @@
 """
 Author: Christos Botos
-LinkedIn: https://www.linkedin.com/in/christos-botos-2369hcty3396
-Email: hcty02@gmail.com
 GitHub: https://github.com/ChrisBotos
+PyPi: https://pypi.org/user/ChrisBotos
+Email: botoschristos@gmail.com
+LinkedIn: https://www.linkedin.com/in/christos-botos-2369hcty3396
 
-Project Date: Autumn 2023
+Project Starting Date: Autumn 2023
 
 Description:
 This is the file containing a class with functions for drawing dynamic graphs on pygame.
@@ -20,29 +21,35 @@ import numpy as np
 
 class DynamicPygameGraphs:
     def __init__(self, x, y, screen):
+        """
+        Initializes the DynamicPygameGraphs class.
+
+        Parameters:
+        - x (int): The x-coordinate of the top-left position of the graph on the screen.
+        - y (int): The y-coordinate of the top-left position of the graph on the screen.
+        - screen (pygame.Surface): The Pygame screen surface to draw the graph on.
+        """
         self.reset(x, y, screen)
 
-    # The reset function can be used to reset the instance to its initial parameters.
+
     def reset(self, x, y, screen):
-        # The x and y indicate the top left position of the graph on the screen.
+        """
+        Resets the instance to its initial parameters.
+
+        Parameters:
+        - x (int): The x-coordinate of the top-left position of the graph on the screen.
+        - y (int): The y-coordinate of the top-left position of the graph on the screen.
+        - screen (pygame.Surface): The Pygame screen surface to draw the graph on.
+        """
+        # The x and y indicate the top-left position of the graph on the screen.
         self.x = x
         self.y = y
 
-        # This is the pygame screen where the graph will be displayed on.
+        # This is the Pygame screen where the graph will be displayed.
         self.screen = screen
 
-    # Press the arrow keys to scroll on screen, feel free to change this function if you want to scroll differently.
-    def scroll(self, scrolling_speed=10):
-        key = pygame.key.get_pressed()
-        if key[pygame.K_UP]:
-            self.y += scrolling_speed
-        if key[pygame.K_DOWN]:
-            self.y -= scrolling_speed
-        if key[pygame.K_RIGHT]:
-            self.x -= scrolling_speed
-        if key[pygame.K_LEFT]:
-            self.x += scrolling_speed
 
+    """Graph Functions"""
 
     def dynamic_histogram(self,
                           x_values=np.array([]),
@@ -82,7 +89,7 @@ class DynamicPygameGraphs:
         - graph_tick_marks_text_color: The color of graph tick_mark text.
         - graph_tick_marks_text_space_from_x_axis: Space between text and x-axis.
         - graph_tick_marks_text_space_from_y_axis: Space between text and y-axis.
-        - move_zero_along_x_axis: The number of values (not bins) to move the (y==0 & x==0) point to the right or to the left.
+        - move_zero_along_x_axis: The number of bins to move the (y==0 & x==0) point to the right or to the left.
         - bin_array_is_given_as_x_values: A boolean indicating whether bin_array is given as x_values.
         - have_extra_bin: A boolean indicating whether to include an extra bin when x_values are not perfectly divided into bins.
         """
@@ -100,7 +107,7 @@ class DynamicPygameGraphs:
         # The y_amplifier is a variable that is multiplied with all the y values.
         #
         # The move_zero_along_x_axis parameter allows you to move the (y==0 & x==0) point to the right or to the left.
-        # It is measured in actual value not bins.
+        # It is measured in bins, its value showing the start of the bin that should start from 0 to bin_size.
         #
         # The extra bin accounts for the case where the x_values are not perfectly divided into the bins.
         # For example: raw_x_values = [1,3,0,4,1] with bin_size = 2.
@@ -108,7 +115,7 @@ class DynamicPygameGraphs:
         # The resulting bin_array would be [4,4,1] ,in case have_extra_bin is True.
 
 
-        x_values = np.array(x_values)  # Accounting for the case of a python list.
+        x_values = np.array(x_values, dtype=int)  # Accounting for the case of a python list. The dtype=int does not matter because pygame does that to float coordinates anyway.
 
         if graph_tick_marks_font is None:
             graph_tick_marks_font = pygame.font.SysFont("Helvetica", 10)
@@ -197,9 +204,6 @@ class DynamicPygameGraphs:
 
 
         """Draw the tick_marks"""
-        # The move_zero_along_x_axis is measured in bins so this is how we extract the actual x value from it.
-        move_zero_along_x_axis_in_actual_value = move_zero_along_x_axis * bin_size
-
         # This shows how many bins or how many bars are displayed between two tick marks.
         num_of_bins_between_two_x_tick_marks = int(graph_x / x_tick_marks / graph_bin_size)
 
@@ -221,11 +225,8 @@ class DynamicPygameGraphs:
                              graph_tick_marks_text_space_from_x_axis,
                              graph_tick_marks_text_space_from_y_axis,
                              font_size,
-                             move_zero_along_x_axis_in_actual_value,
+                             move_zero_along_x_axis,
                              move_zero_along_x_axis_tick_mark_text_color)
-
-
-
 
 
     def dynamic_line_graph(self,
@@ -479,16 +480,55 @@ class DynamicPygameGraphs:
 
 
     """Non_Graph useful functions for the class"""
+
+    def scroll(self, scrolling_speed=10):
+        """
+        Scrolls the view by adjusting the x and y coordinates of every object
+        based on the current scrolling speed and the arrow key pressed.
+
+        Parameters:
+        - scrolling_speed (int, optional): The speed at which the view scrolls. Default is 10.
+        """
+        # Get the current state of all keyboard keys.
+        key = pygame.key.get_pressed()
+
+        # Check if the UP arrow key is pressed.
+        if key[pygame.K_UP]:
+            # Move all objects down by increasing their y-coordinate.
+            self.y += scrolling_speed
+
+        # Check if the DOWN arrow key is pressed.
+        if key[pygame.K_DOWN]:
+            # Move all objects up by decreasing their y-coordinate.
+            self.y -= scrolling_speed
+
+        # Check if the RIGHT arrow key is pressed.
+        if key[pygame.K_RIGHT]:
+            # Move all objects to the left by decreasing their x-coordinate.
+            self.x -= scrolling_speed
+
+        # Check if the LEFT arrow key is pressed.
+        if key[pygame.K_LEFT]:
+            # Move all objects to the right by increasing their x-coordinate.
+            self.x += scrolling_speed
+
+
     def draw_graph_text(self,
                         text_to_be_written='',
                         text_space_from_x_axis=500,
                         text_space_from_y_axis=25,
                         font=None,
                         text_color=(255, 255, 255)):
+        """
+        Draws text on screen in a position relative to the graph positions.
 
-        # Draws text on screen in a position relative to the graph positions.
-
-
+        Parameters:
+        - text_to_be_written (str): The text to be displayed.
+        - text_space_from_x_axis (int): The space from the x-axis where the text will be displayed.
+        - text_space_from_y_axis (int): The space from the y-axis where the text will be displayed.
+        - font (pygame.font.Font, optional): The font of the text. Default is None.
+        - text_color (tuple): The color of the text (RGB tuple). Default is white.
+        """
         if font is None:
             font = pygame.font.SysFont("Helvetica", 10)
 
@@ -510,43 +550,73 @@ class DynamicPygameGraphs:
                         font_size,
                         move_zero_along_x_axis_in_actual_value=0,
                         move_zero_along_x_axis_tick_mark_text_color=None):
+        """
+        Draws the tick marks on the graph.
 
+        Parameters:
+        - graph_x (int): The width of the graph.
+        - graph_y (int): The height of the graph.
+        - x_tick_marks (int): The number of tick marks on the x-axis.
+        - y_tick_marks (int): The number of tick marks on the y-axis.
+        - graph_tick_marks_font (pygame.font.Font): The font of the tick mark text.
+        - distance_between_two_x_tick_marks (int): The distance between two x-axis tick marks.
+        - distance_between_two_y_tick_marks (int): The distance between two y-axis tick marks.
+        - graph_tick_marks_text_color (tuple): The color of the tick mark text (RGB tuple).
+        - graph_tick_marks_text_space_from_x_axis (int): The space from the x-axis where the tick mark text will be displayed.
+        - graph_tick_marks_text_space_from_y_axis (int): The space from the y-axis where the tick mark text will be displayed.
+        - font_size (int): The size of the font for the tick mark text.
+        - move_zero_along_x_axis_in_actual_value (int, optional): The actual value to move the zero along the x-axis. Default is 0.
+        - move_zero_along_x_axis_tick_mark_text_color (tuple, optional): The color of the zero tick mark text (RGB tuple). Default is the same as graph_tick_marks_text_color.
+        """
         if move_zero_along_x_axis_tick_mark_text_color is None:
             move_zero_along_x_axis_tick_mark_text_color = graph_tick_marks_text_color
 
-
-        """Draw the x_tick_marks"""
-        # The tick_mark position is indicates how far right from the start of the x_axis the tick_mark is placed.
+        # Draw the x_tick_marks
+        # The tick_mark position indicates how far right from the start of the x_axis the tick_mark is placed.
         x_tick_mark_position = self.x + graph_x // x_tick_marks
 
         for counter in range(1, x_tick_marks + 1):
-            # We draw a line with a height of 2  (from -1 to 1 as seen below) which is the tick_mark.
-            pygame.draw.line(self.screen, (0, 0, 0), (x_tick_mark_position, self.y + graph_y + 1), (x_tick_mark_position, self.y + graph_y - 1))
+            # Draw a line with a height of 2 (from -1 to 1) which is the tick_mark.
+            pygame.draw.line(self.screen, (0, 0, 0),
+                             (x_tick_mark_position, self.y + graph_y + 1),
+                             (x_tick_mark_position, self.y + graph_y - 1))
 
-            # We draw the values of the tick_marks.
-            img = graph_tick_marks_font.render(str(int(distance_between_two_x_tick_marks * counter - move_zero_along_x_axis_in_actual_value)), True, graph_tick_marks_text_color)
-            self.screen.blit(img, (x_tick_mark_position + 1, self.y + graph_y + graph_tick_marks_text_space_from_x_axis))
+            # Draw the values of the tick_marks.
+            img = graph_tick_marks_font.render(
+                str(int(distance_between_two_x_tick_marks * counter - move_zero_along_x_axis_in_actual_value)),
+                True,
+                graph_tick_marks_text_color
+            )
+            self.screen.blit(img,
+                             (x_tick_mark_position + 1, self.y + graph_y + graph_tick_marks_text_space_from_x_axis))
 
-            # We go to the next tick_mark.
+            # Move to the next tick_mark.
             x_tick_mark_position += graph_x // x_tick_marks
 
-        # This is to draw the zero.
+        # Draw the zero.
         img = graph_tick_marks_font.render("0", True, move_zero_along_x_axis_tick_mark_text_color)
-        self.screen.blit(img, (self.x + move_zero_along_x_axis_in_actual_value, self.y + graph_y + graph_tick_marks_text_space_from_x_axis))
+        self.screen.blit(img, (
+        self.x + move_zero_along_x_axis_in_actual_value, self.y + graph_y + graph_tick_marks_text_space_from_x_axis))
 
-
-        """Draw the y_tick_marks"""
+        # Draw the y_tick_marks
         y_tick_mark_position = self.y + graph_y - graph_y // y_tick_marks
 
         for counter in range(1, y_tick_marks + 1):
-            # We draw a line with a height of 2  (from -1 to 1 as seen below) which is the tick_mark.
-            pygame.draw.line(self.screen, (0, 0, 0), (self.x + 1, self.y + y_tick_mark_position), (self.x - 1, self.y + y_tick_mark_position))
+            # Draw a line with a height of 2 (from -1 to 1) which is the tick_mark.
+            pygame.draw.line(self.screen, (0, 0, 0),
+                             (self.x + 1, self.y + y_tick_mark_position),
+                             (self.x - 1, self.y + y_tick_mark_position))
 
-            # We draw the values of the tick_marks.
-            img = graph_tick_marks_font.render(str(int(distance_between_two_y_tick_marks * counter)), True, graph_tick_marks_text_color)
-            self.screen.blit(img, (self.x - graph_tick_marks_text_space_from_y_axis, y_tick_mark_position - font_size // 2))
+            # Draw the values of the tick_marks.
+            img = graph_tick_marks_font.render(
+                str(int(distance_between_two_y_tick_marks * counter)),
+                True,
+                graph_tick_marks_text_color
+            )
+            self.screen.blit(img,
+                             (self.x - graph_tick_marks_text_space_from_y_axis, y_tick_mark_position - font_size // 2))
 
-            # We go to the next tick_mark.
+            # Move to the next tick_mark.
             y_tick_mark_position -= graph_y // y_tick_marks
 
 
@@ -610,6 +680,3 @@ def draw_circle_alpha(surface,
 
     # Blit (copy) the transparent surface onto the target surface with the center adjusted
     surface.blit(shape_surf, (center[0] - radius, center[1] - radius))
-
-
-
