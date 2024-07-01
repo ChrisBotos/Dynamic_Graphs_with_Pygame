@@ -67,7 +67,7 @@ class DynamicPygameGraphs:
                           graph_tick_marks_text_space_from_x_axis=10,
                           graph_tick_marks_text_space_from_y_axis=20,
                           move_zero_along_x_axis=0,
-                          move_zero_along_x_axis_tick_mark_text_color=(0, 0, 0),
+                          zero_tick_mark_text_color=(0, 0, 0),
                           bin_array_is_given_as_x_values=True,
                           have_extra_bin=True):
 
@@ -226,7 +226,7 @@ class DynamicPygameGraphs:
                              graph_tick_marks_text_space_from_y_axis,
                              font_size,
                              move_zero_along_x_axis,
-                             move_zero_along_x_axis_tick_mark_text_color)
+                             zero_tick_mark_text_color)
 
 
     def dynamic_line_graph(self,
@@ -549,7 +549,7 @@ class DynamicPygameGraphs:
                         graph_tick_marks_text_space_from_y_axis,
                         font_size,
                         move_zero_along_x_axis_in_actual_value=0,
-                        move_zero_along_x_axis_tick_mark_text_color=None):
+                        zero_tick_mark_text_color=None):
         """
         Draws the tick marks on the graph.
 
@@ -566,10 +566,10 @@ class DynamicPygameGraphs:
         - graph_tick_marks_text_space_from_y_axis (int): The space from the y-axis where the tick mark text will be displayed.
         - font_size (int): The size of the font for the tick mark text.
         - move_zero_along_x_axis_in_actual_value (int, optional): The actual value to move the zero along the x-axis. Default is 0.
-        - move_zero_along_x_axis_tick_mark_text_color (tuple, optional): The color of the zero tick mark text (RGB tuple). Default is the same as graph_tick_marks_text_color.
+        - zero_tick_mark_text_color (tuple, optional): The color of the zero tick mark text (RGB tuple). Default is the same as graph_tick_marks_text_color.
         """
-        if move_zero_along_x_axis_tick_mark_text_color is None:
-            move_zero_along_x_axis_tick_mark_text_color = graph_tick_marks_text_color
+        if zero_tick_mark_text_color is None:
+            zero_tick_mark_text_color = graph_tick_marks_text_color
 
         # Draw the x_tick_marks
         # The tick_mark position indicates how far right from the start of the x_axis the tick_mark is placed.
@@ -594,7 +594,7 @@ class DynamicPygameGraphs:
             x_tick_mark_position += graph_x // x_tick_marks
 
         # Draw the zero.
-        img = graph_tick_marks_font.render("0", True, move_zero_along_x_axis_tick_mark_text_color)
+        img = graph_tick_marks_font.render("0", True, zero_tick_mark_text_color)
         self.screen.blit(img, (
         self.x + move_zero_along_x_axis_in_actual_value, self.y + graph_y + graph_tick_marks_text_space_from_x_axis))
 

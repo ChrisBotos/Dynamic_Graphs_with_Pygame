@@ -111,7 +111,7 @@ while running:
                                                   graph_tick_marks_text_space_from_x_axis=10,
                                                   graph_tick_marks_text_space_from_y_axis=20,
                                                   move_zero_along_x_axis=0,
-                                                  move_zero_along_x_axis_tick_mark_text_color=(255, 0, 0),
+                                                  zero_tick_mark_text_color=(255, 0, 0),
                                                   bin_array_is_given_as_x_values=True,
                                                   have_extra_bin=True)
 
@@ -141,7 +141,7 @@ while running:
                                                   graph_tick_marks_text_space_from_x_axis=20,  # Notice that this is different! this way both tick mark labels will be shown when putting the graphs on top of each other.
                                                   graph_tick_marks_text_space_from_y_axis=20,
                                                   move_zero_along_x_axis=0,
-                                                  move_zero_along_x_axis_tick_mark_text_color=(0, 0, 255),
+                                                  zero_tick_mark_text_color=(0, 0, 255),
                                                   bin_array_is_given_as_x_values=False,
                                                   have_extra_bin=True)
     
@@ -172,7 +172,9 @@ while running:
                                                    graph_tick_marks_font=None,
                                                    graph_tick_marks_text_color=(48, 25, 52),
                                                    graph_tick_marks_text_space_from_x_axis=10,
-                                                   graph_tick_marks_text_space_from_y_axis=20)
+                                                   graph_tick_marks_text_space_from_y_axis=20,
+                                                   move_zero_along_x_axis=0,
+                                                   zero_tick_mark_text_color=(0, 0, 0))
 
 
     if what_to_show_dictionary["show_scatter_plot"]:
@@ -201,7 +203,9 @@ while running:
                                                      graph_tick_marks_font=None,
                                                      graph_tick_marks_text_color=(0, 0, 0),
                                                      graph_tick_marks_text_space_from_x_axis=10,
-                                                     graph_tick_marks_text_space_from_y_axis=20)
+                                                     graph_tick_marks_text_space_from_y_axis=20,
+                                                     move_zero_along_x_axis=250,  # Take note of how I am moving zero here to change the tick marks in the x_axis.
+                                                     zero_tick_mark_text_color=(0, 0, 0))
 
     # Update the display
     pygame.display.flip()

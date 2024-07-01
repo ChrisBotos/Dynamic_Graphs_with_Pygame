@@ -41,7 +41,7 @@ pygame_graphs_instance.dynamic_histogram(x_values=np.array([1, 0, 2, 3, 0, 1]),
                                          graph_tick_marks_text_space_from_x_axis=10,
                                          graph_tick_marks_text_space_from_y_axis=20,
                                          move_zero_along_x_axis=0,
-                                         move_zero_along_x_axis_tick_mark_text_color=(0, 0, 0),
+                                         zero_tick_mark_text_color=(0, 0, 0),
                                          bin_array_is_given_as_x_values=True,
                                          have_extra_bin=True)
 
