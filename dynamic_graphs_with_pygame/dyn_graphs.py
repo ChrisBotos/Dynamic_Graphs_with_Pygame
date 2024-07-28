@@ -628,8 +628,8 @@ class DynamicPygameGraphs:
         for counter in range(1, y_tick_marks + 1):
             # Draw a line with a height of 2 (from -1 to 1) which is the tick_mark.
             pygame.draw.line(self.screen, (0, 0, 0),
-                             (self.x + 1, self.y + y_tick_mark_position),
-                             (self.x - 1, self.y + y_tick_mark_position))
+                             (self.x + 1, y_tick_mark_position),
+                             (self.x - 1, y_tick_mark_position))
 
             # Draw the values of the tick_marks.
             img = graph_tick_marks_font.render(
