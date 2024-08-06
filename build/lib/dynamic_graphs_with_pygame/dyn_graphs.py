@@ -125,11 +125,6 @@ class DynamicPygameGraphs:
             font_size = graph_tick_marks_font.get_height()
 
 
-        """Returning, if the size of the x_values array is 0"""
-        if x_values.size < 1:
-            return
-
-
         """Handling the case where the x values are raw values which have not yet been divided into the bins"""
         # Example of raw x_values: [1, 1, 2, 0, 3, 1]
         # Example of transformation into a bin_array with bin_size = 2: [1, 1, 2, 0, 3, 1] => [2, 2, 4]
