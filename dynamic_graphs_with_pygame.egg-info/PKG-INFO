@@ -1,17 +1,30 @@
 Metadata-Version: 2.1
 Name: dynamic-graphs-with-pygame
-Version: 1.1.5
+Version: 1.1.6
 Summary: A class for drawing dynamic graphs using Pygame.
 Home-page: https://github.com/ChrisBotos/Dynamic_Graphs_with_Pygame
 Author: Christos Botos
 Author-email: hcty02@gmail.com
 License: UNKNOWN
-Project-URL: LinkedIn, https://www.linkedin.com/in/your_username/
-Keywords: pygame graphs dynamic visualization
+Project-URL: Source, https://github.com/ChrisBotos/Dynamic_Graphs_with_Pygame
+Project-URL: PyPI, https://pypi.org/project/dynamic-graphs-with-pygame/
+Project-URL: Documentation, https://github.com/ChrisBotos/Dynamic_Graphs_with_Pygame/blob/main/README.md
+Project-URL: LinkedIn, https://www.linkedin.com/in/christos-botos-2369hcty3396
+Keywords: pygame graphs dynamic visualization,pygame visualization,dynamic graphs
 Platform: UNKNOWN
+Classifier: Development Status :: 5 - Production/Stable
+Classifier: Intended Audience :: Developers
+Classifier: Intended Audience :: Science/Research
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
+Classifier: Topic :: Scientific/Engineering :: Visualization
 Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.7
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
 Classifier: License :: OSI Approved :: MIT License
 Classifier: Operating System :: OS Independent
+Requires-Python: >=3.7
 Description-Content-Type: text/markdown
 License-File: LICENSE
 
