@@ -5,7 +5,7 @@ PyPi: pypi.org/user/ChrisBotos
 Email: botoschristos@gmail.com
 LinkedIn: www.linkedin.com/in/christos-botos-2369hcty3396
 
-Project Starting Date: Autumn 2023
+Project Starting Date: Spring 2023
 
 Description:
 This is the file containing a class with functions for drawing dynamic graphs on pygame.
@@ -15,8 +15,8 @@ Feel free to contact me for any questions.
 """
 
 
-import pygame
 import numpy as np
+import pygame
 
 
 class DynamicPygameGraphs:
@@ -69,7 +69,9 @@ class DynamicPygameGraphs:
                           move_zero_along_x_axis=0,
                           move_zero_along_x_axis_tick_mark_text_color=(0, 0, 0),
                           bin_array_is_given_as_x_values=True,
-                          have_extra_bin=True):
+                          have_extra_bin=True,
+                          graph_x_axis_name_position_x_offset=0,
+                          graph_y_axis_name_position_y_offset=0):
 
 
         """Draws a dynamic histogram graph using Pygame.
@@ -93,6 +95,8 @@ class DynamicPygameGraphs:
         - move_zero_along_x_axis_tick_mark_text_color (tuple): The color of the x-axis tick mark text at the zero position in RGB format.
         - bin_array_is_given_as_x_values (bool): A boolean indicating whether bin_array is given as x_values.
         - have_extra_bin (bool): A boolean indicating whether to include an extra bin when x_values are not perfectly divided into bins.
+        - graph_x_axis_name_position_x_offset (int): A value to move the x_axis_name along the x_axis.
+        - graph_y_axis_name_position_y_offset (int): A value to move the y_axis_name along the y_axis.
         """
 
 
@@ -165,13 +169,13 @@ class DynamicPygameGraphs:
 
         # Draw the x_axis name
         img = graph_tick_marks_font.render(graph_x_axis_name, True, graph_tick_marks_text_color)
-        self.screen.blit(img, (self.x + graph_x + graph_tick_marks_text_space_from_x_axis * 2,
+        self.screen.blit(img, (self.x + graph_x + graph_tick_marks_text_space_from_x_axis * 2 + graph_x_axis_name_position_x_offset,
                                self.y + graph_y + graph_tick_marks_text_space_from_x_axis * 2))
 
         # Draw the y_axis name
         img = graph_tick_marks_font.render(graph_y_axis_name, True, graph_tick_marks_text_color)
         self.screen.blit(img, (self.x - graph_tick_marks_text_space_from_y_axis * 2,
-                               self.y - graph_tick_marks_text_space_from_y_axis * 2))
+                               self.y - graph_tick_marks_text_space_from_y_axis * 2 + graph_y_axis_name_position_y_offset))
 
 
         """Draw the rects for the bins"""
@@ -246,7 +250,9 @@ class DynamicPygameGraphs:
                            graph_tick_marks_text_space_from_x_axis=10,
                            graph_tick_marks_text_space_from_y_axis=20,
                            move_zero_along_x_axis=0,
-                           move_zero_along_x_axis_tick_mark_text_color=(0, 0, 0)):
+                           move_zero_along_x_axis_tick_mark_text_color=(0, 0, 0),
+                           graph_x_axis_name_position_x_offset=0,
+                           graph_y_axis_name_position_y_offset=0):
 
 
         """Draws a dynamic line graph using Pygame.
@@ -270,6 +276,8 @@ class DynamicPygameGraphs:
         - graph_tick_marks_text_space_from_y_axis (int): Space between text and y-axis in pixels.
         - move_zero_along_x_axis (int): How much to move the (y==0 & x==0) point to the right or to the left.
         - move_zero_along_x_axis_tick_mark_text_color (tuple): The color of the x-axis tick mark text at the zero position in RGB format.
+        - graph_x_axis_name_position_x_offset (int): A value to move the x_axis_name along the x_axis.
+        - graph_y_axis_name_position_y_offset (int): A value to move the y_axis_name along the y_axis.
         """
 
 
@@ -289,13 +297,13 @@ class DynamicPygameGraphs:
 
         # Draw the x_axis name
         img = graph_tick_marks_font.render(graph_x_axis_name, True, graph_tick_marks_text_color)
-        self.screen.blit(img, (self.x - graph_tick_marks_text_space_from_x_axis * 2,
+        self.screen.blit(img, (self.x - graph_tick_marks_text_space_from_x_axis * 2 + graph_x_axis_name_position_x_offset,
                                self.y - graph_tick_marks_text_space_from_x_axis * 2))
 
         # Draw the y_axis name
         img = graph_tick_marks_font.render(graph_y_axis_name, True, graph_tick_marks_text_color)
         self.screen.blit(img, (self.x + graph_x + graph_tick_marks_text_space_from_x_axis * 2,
-                               self.y + graph_y + graph_tick_marks_text_space_from_x_axis * 2))
+                               self.y + graph_y + graph_tick_marks_text_space_from_x_axis * 2 + graph_y_axis_name_position_y_offset))
 
 
         """Returning, if the size of the x_values array is 0"""
@@ -323,8 +331,7 @@ class DynamicPygameGraphs:
                              line_color,
                              (on_screen_x_values[index], on_screen_y_values[index]),
                              (on_screen_x_values[index + 1], on_screen_y_values[index + 1]),
-                             line_width
-                             )
+                             line_width)
 
 
         """Draw the tick_marks"""
@@ -371,7 +378,9 @@ class DynamicPygameGraphs:
                              graph_tick_marks_text_space_from_x_axis=10,
                              graph_tick_marks_text_space_from_y_axis=20,
                              move_zero_along_x_axis=0,
-                             move_zero_along_x_axis_tick_mark_text_color=(0, 0, 0)):
+                             move_zero_along_x_axis_tick_mark_text_color=(0, 0, 0),
+                             graph_x_axis_name_position_x_offset=0,
+                             graph_y_axis_name_position_y_offset=0):
 
 
         """Draws a dynamic scatter plot using Pygame.
@@ -396,6 +405,8 @@ class DynamicPygameGraphs:
         - graph_tick_marks_text_space_from_y_axis (int): Space between text and y-axis in pixels.
         - move_zero_along_x_axis (int): How much to move the (y==0 & x==0) point to the right or to the left.
         - move_zero_along_x_axis_tick_mark_text_color (tuple): The color of the x-axis tick mark text at the zero position in RGB format.
+        - graph_x_axis_name_position_x_offset (int): A value to move the x_axis_name along the x_axis.
+        - graph_y_axis_name_position_y_offset (int): A value to move the y_axis_name along the y_axis.
         """
 
         if shape != "circle" and shape != "square":
@@ -417,13 +428,13 @@ class DynamicPygameGraphs:
 
         # Draw the x_axis name
         img = graph_tick_marks_font.render(graph_x_axis_name, True, graph_tick_marks_text_color)
-        self.screen.blit(img, (self.x - graph_tick_marks_text_space_from_x_axis * 2,
+        self.screen.blit(img, (self.x - graph_tick_marks_text_space_from_x_axis * 2 + graph_x_axis_name_position_x_offset,
                                self.y - graph_tick_marks_text_space_from_x_axis * 2))
 
         # Draw the y_axis name
         img = graph_tick_marks_font.render(graph_y_axis_name, True, graph_tick_marks_text_color)
         self.screen.blit(img, (self.x + graph_x + graph_tick_marks_text_space_from_x_axis * 2,
-                               self.y + graph_y + graph_tick_marks_text_space_from_x_axis * 2))
+                               self.y + graph_y + graph_tick_marks_text_space_from_x_axis * 2 + graph_y_axis_name_position_y_offset))
 
 
         """Returning, if the size of the x_values array is 0"""
@@ -532,7 +543,8 @@ class DynamicPygameGraphs:
                         text_space_from_x_axis=500,
                         text_space_from_y_axis=25,
                         font=None,
-                        text_color=(255, 255, 255)):
+                        text_color=(255, 255, 255),
+                        graph_y=500):
 
         """
         Draws text on screen in a position relative to the graph positions.
@@ -549,7 +561,7 @@ class DynamicPygameGraphs:
             font = pygame.font.SysFont("Helvetica", 10)
 
         img = font.render(text_to_be_written, True, text_color)
-        self.screen.blit(img, (self.x - text_space_from_x_axis, self.y + text_space_from_y_axis))
+        self.screen.blit(img, (self.x - text_space_from_y_axis, self.y + graph_y - text_space_from_x_axis))
 
 
     def draw_tick_marks(self,
@@ -602,11 +614,9 @@ class DynamicPygameGraphs:
                              (x_tick_mark_position, self.y + graph_y - 1))
 
             # Draw the values of the tick_marks.
-            img = graph_tick_marks_font.render(
-                str(int(distance_between_two_x_tick_marks * counter - move_zero_along_x_axis)),
-                True,
-                graph_tick_marks_text_color
-            )
+            img = graph_tick_marks_font.render(str(int(distance_between_two_x_tick_marks * counter - move_zero_along_x_axis)),
+                                               True,
+                                               graph_tick_marks_text_color)
 
             self.screen.blit(img,
                              (x_tick_mark_position + 1, self.y + graph_y + graph_tick_marks_text_space_from_x_axis))
@@ -628,11 +638,10 @@ class DynamicPygameGraphs:
                              (self.x - 1, y_tick_mark_position))
 
             # Draw the values of the tick_marks.
-            img = graph_tick_marks_font.render(
-                str(int(distance_between_two_y_tick_marks * counter)),
-                True,
-                graph_tick_marks_text_color
-            )
+            img = graph_tick_marks_font.render(str(int(distance_between_two_y_tick_marks * counter)),
+                                               True,
+                                               graph_tick_marks_text_color)
+
             self.screen.blit(img,
                              (self.x - graph_tick_marks_text_space_from_y_axis, y_tick_mark_position - font_size // 2))
 

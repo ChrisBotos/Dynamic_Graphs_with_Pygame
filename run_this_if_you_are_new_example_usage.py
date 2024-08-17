@@ -102,7 +102,7 @@ while running:
                                                   graph_x=500,
                                                   graph_y=500,
                                                   graph_x_axis_name='',
-                                                  graph_y_axis_name='',
+                                                  graph_y_axis_name='first y axis title',
                                                   x_tick_marks=5,
                                                   y_tick_marks=5,
                                                   y_amplifier=1,
@@ -123,6 +123,13 @@ while running:
             randomized_array2 = np.zeros(5000)
             randomized_array2[2000:] = np.random.uniform(0, 80, 3000)
 
+        # Here is a way to highlight axis title offsets, useful for when there are graphs shown on top of each other.
+        if what_to_show_dictionary["show_first_histogram"]:
+            y_title_offset = 15
+
+        else:
+            y_title_offset = 0
+
         # Drawing the second graph to show that you can make multiple and let them overlap.
         # Also shows the usefulness of alpha_coloring (look at the fourth value in the color).
         pygame_graphs_instance1.dynamic_histogram(x_values=randomized_array2,
@@ -131,7 +138,7 @@ while running:
                                                   graph_x=500,
                                                   graph_y=500,
                                                   graph_x_axis_name='',
-                                                  graph_y_axis_name='',
+                                                  graph_y_axis_name='second y axis title',
                                                   x_tick_marks=5,
                                                   y_tick_marks=5,
                                                   y_amplifier=1,
@@ -141,7 +148,8 @@ while running:
                                                   graph_tick_marks_text_space_from_y_axis=20,
                                                   move_zero_along_x_axis=0,
                                                   bin_array_is_given_as_x_values=False,
-                                                  have_extra_bin=True)
+                                                  have_extra_bin=True,
+                                                  graph_y_axis_name_position_y_offset=y_title_offset)
     
 
     if what_to_show_dictionary["show_line_graph"]:
