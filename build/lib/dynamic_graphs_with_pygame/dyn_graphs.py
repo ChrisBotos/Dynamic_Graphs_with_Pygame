@@ -5,7 +5,7 @@ PyPi: pypi.org/user/ChrisBotos
 Email: botoschristos@gmail.com
 LinkedIn: www.linkedin.com/in/christos-botos-2369hcty3396
 
-Project Starting Date: Spring 2023
+Project Starting Date: Autumn 2023
 
 Description:
 This is the file containing a class with functions for drawing dynamic graphs on pygame.
@@ -539,7 +539,7 @@ class DynamicPygameGraphs:
 
 
     def draw_graph_text(self,
-                        text_to_be_written='',
+                        text='',
                         text_space_from_x_axis=500,
                         text_space_from_y_axis=25,
                         font=None,
@@ -550,7 +550,7 @@ class DynamicPygameGraphs:
         Draws text on screen in a position relative to the graph positions.
 
         Parameters:
-        - text_to_be_written (str): The text to be displayed.
+        - text (str): The text to be displayed.
         - text_space_from_x_axis (int): The space from the x-axis where the text will be displayed.
         - text_space_from_y_axis (int): The space from the y-axis where the text will be displayed.
         - font (pygame.font.Font, optional): The font of the text. Default is None.
@@ -560,7 +560,7 @@ class DynamicPygameGraphs:
         if font is None:
             font = pygame.font.SysFont("Helvetica", 10)
 
-        img = font.render(text_to_be_written, True, text_color)
+        img = font.render(text, True, text_color)
         self.screen.blit(img, (self.x - text_space_from_y_axis, self.y + graph_y - text_space_from_x_axis))
 
 
@@ -603,39 +603,49 @@ class DynamicPygameGraphs:
         if move_zero_along_x_axis_tick_mark_text_color is None:
             move_zero_along_x_axis_tick_mark_text_color = graph_tick_marks_text_color
 
-        # Draw the x_tick_marks
+        # Draw the x_tick_marks.
         # The tick_mark position indicates how far right from the start of the x_axis the tick_mark is placed.
         x_tick_mark_position = self.x + graph_x // x_tick_marks
 
         for counter in range(1, x_tick_marks + 1):
-            # Draw a line with a height of 2 (from -1 to 1) which is the tick_mark.
-            pygame.draw.line(self.screen, (0, 0, 0),
-                             (x_tick_mark_position, self.y + graph_y + 1),
-                             (x_tick_mark_position, self.y + graph_y - 1))
+            # Draw a line with a height of 8 (from -4 to 4) which is the tick_mark.
+            pygame.draw.line(self.screen,
+                             (0, 0, 0),
+                             (x_tick_mark_position, self.y + graph_y + 4),
+                             (x_tick_mark_position, self.y + graph_y - 4))
 
             # Draw the values of the tick_marks.
             img = graph_tick_marks_font.render(str(int(distance_between_two_x_tick_marks * counter - move_zero_along_x_axis)),
                                                True,
                                                graph_tick_marks_text_color)
-
+            
             self.screen.blit(img,
-                             (x_tick_mark_position + 1, self.y + graph_y + graph_tick_marks_text_space_from_x_axis))
+                             (x_tick_mark_position, self.y + graph_y + graph_tick_marks_text_space_from_x_axis))
 
             # Move to the next tick_mark.
             x_tick_mark_position += graph_x // x_tick_marks
 
         # Draw the zero.
+        zero_position = self.x + move_zero_along_x_axis // bin_size
+
         img = graph_tick_marks_font.render("0", True, move_zero_along_x_axis_tick_mark_text_color)
-        self.screen.blit(img, (self.x + move_zero_along_x_axis / bin_size, self.y + graph_y + graph_tick_marks_text_space_from_x_axis))
+        self.screen.blit(img,
+                         (zero_position, self.y + graph_y + graph_tick_marks_text_space_from_x_axis))
+
+        # Draw a line with a height of 8 (from -4 to 4) which is the tick_mark.
+        pygame.draw.line(self.screen,
+                         move_zero_along_x_axis_tick_mark_text_color,
+                         (zero_position, self.y + graph_y + 4),
+                         (zero_position, self.y + graph_y - 4))
 
         # Draw the y_tick_marks
         y_tick_mark_position = self.y + graph_y - graph_y // y_tick_marks
 
         for counter in range(1, y_tick_marks + 1):
-            # Draw a line with a height of 2 (from -1 to 1) which is the tick_mark.
+            # Draw a line with a height of 8 (from -4 to 4) which is the tick_mark.
             pygame.draw.line(self.screen, (0, 0, 0),
-                             (self.x + 1, y_tick_mark_position),
-                             (self.x - 1, y_tick_mark_position))
+                             (self.x + 4, y_tick_mark_position),
+                             (self.x - 4, y_tick_mark_position))
 
             # Draw the values of the tick_marks.
             img = graph_tick_marks_font.render(str(int(distance_between_two_y_tick_marks * counter)),

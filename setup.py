@@ -6,7 +6,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setup(
     name="dynamic_graphs_with_pygame",
-    version="1.1.7",
+    version="1.1.8",
     description="A class for drawing dynamic graphs using Pygame.",
     long_description=long_description,
     long_description_content_type="text/markdown",
