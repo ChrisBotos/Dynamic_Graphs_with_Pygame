@@ -9,6 +9,7 @@ Project Starting Date: Autumn 2023
 
 Description:
 This is the file containing a class with functions for drawing dynamic graphs on pygame.
+Create a class of graphs that allow for positioning dynamic graphs on a 2d screen and scrolling around.
 
 Contact:
 Feel free to contact me for any questions.
@@ -315,8 +316,10 @@ class DynamicPygameGraphs:
         max_x = np.max(x_values)
         max_y = np.max(y_values)
 
-        if normalize:
+        if max_x != 0:
             x_values = x_values / max_x * graph_x
+
+        if max_y != 0:
             y_values = y_values / max_y * graph_y
 
 
@@ -447,8 +450,12 @@ class DynamicPygameGraphs:
         max_y = np.max(y_values)
 
         if normalize:
-            x_values = x_values / max_x * graph_x
-            y_values = y_values / max_y * graph_y
+
+            if max_x != 0 :
+                x_values = x_values / max_x * graph_x
+
+            if max_y != 0:
+                y_values = y_values / max_y * graph_y
 
 
         """Calculate the actual x and y values on screen"""
