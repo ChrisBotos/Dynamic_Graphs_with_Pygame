@@ -5,8 +5,12 @@ from dynamic_graphs_with_pygame.dyn_graphs import DynamicPygameGraphs
 # Run this script and play around with the keys 1,2,3,4,space and the arrow keys on your keyboard.
 
 
-# Initialize Pygame
+# Initialize Pygame.
 pygame.init()
+
+# FPS.
+clock = pygame.time.Clock()
+fps = 60
 
 
 # Set up the display
@@ -97,12 +101,12 @@ while running:
         # Drawing the graph.
         pygame_graphs_instance1.dynamic_histogram(x_values=randomized_array1,
                                                   bin_size=1,
-                                                  bar_color=(255, 0, 0),
-                                                  # You do not need to make both bars alpha just one, this one is RGB not RGBA but the other below is RGBA.
+                                                  bar_color=(255, 0, 0),  # You do not need to make both bars alpha just one in overlaps, this one is RGB not RGBA but the other below is RGBA.
                                                   graph_x=500,
                                                   graph_y=500,
                                                   graph_x_axis_name='',
                                                   graph_y_axis_name='first y axis title',
+                                                  graph_axes_color=(0, 0, 0),
                                                   x_tick_marks=5,
                                                   y_tick_marks=5,
                                                   y_amplifier=1,
@@ -139,6 +143,7 @@ while running:
                                                   graph_y=500,
                                                   graph_x_axis_name='',
                                                   graph_y_axis_name='second y axis title',
+                                                  graph_axes_color=(0, 0, 0),
                                                   x_tick_marks=5,
                                                   y_tick_marks=5,
                                                   y_amplifier=1,
@@ -172,6 +177,7 @@ while running:
                                                    graph_y=500,
                                                    graph_x_axis_name='',
                                                    graph_y_axis_name='',
+                                                   graph_axes_color=(0, 0, 0),
                                                    x_tick_marks=5,
                                                    y_tick_marks=5,
                                                    y_amplifier=1,  # This not being 1 is negated by normalize=True
@@ -211,7 +217,10 @@ while running:
                                                      graph_tick_marks_text_space_from_y_axis=20,
                                                      move_zero_along_x_axis=250)  # Take note of how I am moving zero here to change the tick marks in the x_axis.
 
-    # Update the display
+    # FPS.
+    clock.tick(fps)
+
+    # Update the display.
     pygame.display.flip()
 
 # Quit Pygame

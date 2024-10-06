@@ -60,6 +60,7 @@ class DynamicPygameGraphs:
                           graph_y=500,
                           graph_x_axis_name='',
                           graph_y_axis_name='',
+                          graph_axes_color=(0, 0, 0),
                           x_tick_marks=5,
                           y_tick_marks=5,
                           y_amplifier=1,
@@ -68,7 +69,7 @@ class DynamicPygameGraphs:
                           graph_tick_marks_text_space_from_x_axis=10,
                           graph_tick_marks_text_space_from_y_axis=20,
                           move_zero_along_x_axis=0,
-                          move_zero_along_x_axis_tick_mark_text_color=(0, 0, 0),
+                          move_zero_along_x_axis_tick_mark_text_color=None,
                           bin_array_is_given_as_x_values=True,
                           have_extra_bin=True,
                           graph_x_axis_name_position_x_offset=0,
@@ -85,6 +86,7 @@ class DynamicPygameGraphs:
         - graph_y (int): The height of the graph area.
         - graph_x_axis_name (str): The label for the x-axis.
         - graph_y_axis_name (str): The label for the y-axis.
+        - graph_axes_color (tuple): The color of graph axes text in RGB format.
         - x_tick_marks (int): The number of x-axis tick marks.
         - y_tick_marks (int): The number of y-axis tick marks.
         - y_amplifier (float): The amplification factor for y-values.
@@ -154,6 +156,10 @@ class DynamicPygameGraphs:
 
 
         """Calculate the graph_bin_size"""
+        # Avoid dividing by zero.
+        if x_values.size == 0:
+            num_of_bins = 1
+
         # The graph_bin_size has to do with how wide the line can be in the graph.
         graph_bin_size = graph_x / num_of_bins
 
@@ -165,8 +171,8 @@ class DynamicPygameGraphs:
 
 
         """Draw the graph axes"""
-        pygame.draw.line(self.screen, (0, 0, 0), (self.x, self.y), (self.x, self.y + graph_y))
-        pygame.draw.line(self.screen, (0, 0, 0), (self.x, self.y + graph_y), (self.x + graph_x, self.y + graph_y))
+        pygame.draw.line(self.screen, graph_axes_color, (self.x, self.y), (self.x, self.y + graph_y))
+        pygame.draw.line(self.screen, graph_axes_color, (self.x, self.y + graph_y), (self.x + graph_x, self.y + graph_y))
 
         # Draw the x_axis name
         img = graph_tick_marks_font.render(graph_x_axis_name, True, graph_tick_marks_text_color)
@@ -243,6 +249,7 @@ class DynamicPygameGraphs:
                            graph_y=500,
                            graph_x_axis_name='',
                            graph_y_axis_name='',
+                           graph_axes_color=(0, 0, 0),
                            x_tick_marks=5,
                            y_tick_marks=5,
                            y_amplifier=1,
@@ -251,7 +258,7 @@ class DynamicPygameGraphs:
                            graph_tick_marks_text_space_from_x_axis=10,
                            graph_tick_marks_text_space_from_y_axis=20,
                            move_zero_along_x_axis=0,
-                           move_zero_along_x_axis_tick_mark_text_color=(0, 0, 0),
+                           move_zero_along_x_axis_tick_mark_text_color=None,
                            graph_x_axis_name_position_x_offset=0,
                            graph_y_axis_name_position_y_offset=0):
 
@@ -268,6 +275,7 @@ class DynamicPygameGraphs:
         - graph_y (int): The height of the graph area.
         - graph_x_axis_name (str): The label for the x-axis.
         - graph_y_axis_name (str): The label for the y-axis.
+        - graph_axes_color (tuple): The color of graph axes text in RGB format.
         - x_tick_marks (int): The number of x-axis tick marks.
         - y_tick_marks (int): The number of y-axis tick marks.
         - y_amplifier (float): The amplification factor for y-values.
@@ -293,18 +301,19 @@ class DynamicPygameGraphs:
 
 
         """Draw the graph axes"""
-        pygame.draw.line(self.screen, (0, 0, 0), (self.x, self.y), (self.x, self.y + graph_y))
-        pygame.draw.line(self.screen, (0, 0, 0), (self.x, self.y + graph_y), (self.x + graph_x, self.y + graph_y))
+        pygame.draw.line(self.screen, graph_axes_color, (self.x, self.y), (self.x, self.y + graph_y))
+        pygame.draw.line(self.screen, graph_axes_color, (self.x, self.y + graph_y), (self.x + graph_x, self.y + graph_y))
 
         # Draw the x_axis name
         img = graph_tick_marks_font.render(graph_x_axis_name, True, graph_tick_marks_text_color)
-        self.screen.blit(img, (self.x - graph_tick_marks_text_space_from_x_axis * 2 + graph_x_axis_name_position_x_offset,
-                               self.y - graph_tick_marks_text_space_from_x_axis * 2))
+        self.screen.blit(img, (self.x + graph_x + graph_tick_marks_text_space_from_x_axis * 2 + graph_x_axis_name_position_x_offset,
+                               self.y + graph_y + graph_tick_marks_text_space_from_x_axis * 2))
 
         # Draw the y_axis name
         img = graph_tick_marks_font.render(graph_y_axis_name, True, graph_tick_marks_text_color)
-        self.screen.blit(img, (self.x + graph_x + graph_tick_marks_text_space_from_x_axis * 2,
-                               self.y + graph_y + graph_tick_marks_text_space_from_x_axis * 2 + graph_y_axis_name_position_y_offset))
+        self.screen.blit(img, (self.x - graph_tick_marks_text_space_from_y_axis * 2,
+                               self.y - graph_tick_marks_text_space_from_y_axis * 2 + graph_y_axis_name_position_y_offset))
+
 
 
         """Returning, if the size of the x_values array is 0"""
@@ -373,6 +382,7 @@ class DynamicPygameGraphs:
                              graph_y=500,
                              graph_x_axis_name='',
                              graph_y_axis_name='',
+                             graph_axes_color=(0, 0, 0),
                              x_tick_marks=5,
                              y_tick_marks=5,
                              y_amplifier=1,
@@ -381,7 +391,7 @@ class DynamicPygameGraphs:
                              graph_tick_marks_text_space_from_x_axis=10,
                              graph_tick_marks_text_space_from_y_axis=20,
                              move_zero_along_x_axis=0,
-                             move_zero_along_x_axis_tick_mark_text_color=(0, 0, 0),
+                             move_zero_along_x_axis_tick_mark_text_color=None,
                              graph_x_axis_name_position_x_offset=0,
                              graph_y_axis_name_position_y_offset=0):
 
@@ -399,6 +409,7 @@ class DynamicPygameGraphs:
         - graph_y (int): The height of the graph area.
         - graph_x_axis_name (str): The label for the x-axis.
         - graph_y_axis_name (str): The label for the y-axis.
+        - graph_axes_color (tuple): The color of graph axes text in RGB format.
         - x_tick_marks (int): The number of x-axis tick marks.
         - y_tick_marks (int): The number of y-axis tick marks.
         - y_amplifier (float): The amplification factor for y-values.
@@ -426,18 +437,19 @@ class DynamicPygameGraphs:
 
 
         """Draw the graph axes"""
-        pygame.draw.line(self.screen, (0, 0, 0), (self.x, self.y), (self.x, self.y + graph_y))
-        pygame.draw.line(self.screen, (0, 0, 0), (self.x, self.y + graph_y), (self.x + graph_x, self.y + graph_y))
+        pygame.draw.line(self.screen, graph_axes_color, (self.x, self.y), (self.x, self.y + graph_y))
+        pygame.draw.line(self.screen, graph_axes_color, (self.x, self.y + graph_y), (self.x + graph_x, self.y + graph_y))
 
         # Draw the x_axis name
         img = graph_tick_marks_font.render(graph_x_axis_name, True, graph_tick_marks_text_color)
-        self.screen.blit(img, (self.x - graph_tick_marks_text_space_from_x_axis * 2 + graph_x_axis_name_position_x_offset,
-                               self.y - graph_tick_marks_text_space_from_x_axis * 2))
+        self.screen.blit(img, (self.x + graph_x + graph_tick_marks_text_space_from_x_axis * 2 + graph_x_axis_name_position_x_offset,
+                               self.y + graph_y + graph_tick_marks_text_space_from_x_axis * 2))
 
         # Draw the y_axis name
         img = graph_tick_marks_font.render(graph_y_axis_name, True, graph_tick_marks_text_color)
-        self.screen.blit(img, (self.x + graph_x + graph_tick_marks_text_space_from_x_axis * 2,
-                               self.y + graph_y + graph_tick_marks_text_space_from_x_axis * 2 + graph_y_axis_name_position_y_offset))
+        self.screen.blit(img, (self.x - graph_tick_marks_text_space_from_y_axis * 2,
+                               self.y - graph_tick_marks_text_space_from_y_axis * 2 + graph_y_axis_name_position_y_offset))
+
 
 
         """Returning, if the size of the x_values array is 0"""
@@ -617,7 +629,7 @@ class DynamicPygameGraphs:
         for counter in range(1, x_tick_marks + 1):
             # Draw a line with a height of 8 (from -4 to 4) which is the tick_mark.
             pygame.draw.line(self.screen,
-                             (0, 0, 0),
+                             graph_tick_marks_text_color,
                              (x_tick_mark_position, self.y + graph_y + 4),
                              (x_tick_mark_position, self.y + graph_y - 4))
 
@@ -625,7 +637,7 @@ class DynamicPygameGraphs:
             img = graph_tick_marks_font.render(str(int(distance_between_two_x_tick_marks * counter - move_zero_along_x_axis)),
                                                True,
                                                graph_tick_marks_text_color)
-            
+
             self.screen.blit(img,
                              (x_tick_mark_position, self.y + graph_y + graph_tick_marks_text_space_from_x_axis))
 
@@ -635,7 +647,7 @@ class DynamicPygameGraphs:
         # Draw the zero.
         zero_position = self.x + move_zero_along_x_axis // bin_size
 
-        img = graph_tick_marks_font.render("0", True, move_zero_along_x_axis_tick_mark_text_color)
+        img = graph_tick_marks_font.render('0', True, move_zero_along_x_axis_tick_mark_text_color)
         self.screen.blit(img,
                          (zero_position, self.y + graph_y + graph_tick_marks_text_space_from_x_axis))
 
@@ -650,7 +662,7 @@ class DynamicPygameGraphs:
 
         for counter in range(1, y_tick_marks + 1):
             # Draw a line with a height of 8 (from -4 to 4) which is the tick_mark.
-            pygame.draw.line(self.screen, (0, 0, 0),
+            pygame.draw.line(self.screen, graph_tick_marks_text_color,
                              (self.x + 4, y_tick_mark_position),
                              (self.x - 4, y_tick_mark_position))
 
